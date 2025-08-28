@@ -1,0 +1,66 @@
+:root {
+    --background-colour: hsl(0, 0%, 0%);
+    --foreground-colour: #f2f2f2;
+    --action-colour: red;
+
+    --font-size: 24px;
+}
+
+html {
+    font-family: "Creepster", system-ui;
+    font-weight: 400;
+    font-size: var(--font-size);
+    color: var(--foreground-colour);
+}
+
+body {
+    background-color: var(--background-colour);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+h1, h2 {
+    margin: 0px;
+    padding: 0px;
+}
+
+h1 {
+    font-family: "Creepster", system-ui;
+    font-weight: 500;
+    user-select: none;
+}
+
+h2 {
+
+    font-family: "Gaegu", sans-serif;
+    font-weight: 400;
+    user-select: none;
+}
+
+.fill:hover,
+.fill:focus {
+ background-color: var(--foreground-colour);
+}
+
+button {
+  background: none;
+  border: 2px solid var(--foreground-colour);
+  font: inherit;
+  line-height: 1;
+  margin: 0.5em;
+  padding: 1em 1em;
+  border-radius: 999px;
+}
+
+button {  
+  color: var(--foreground-colour);
+  transition: 0.5s;
+  
+  &:hover,
+  &:focus { 
+    color: var(--action-colour);
+  }
+}
