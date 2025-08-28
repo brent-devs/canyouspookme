@@ -13,8 +13,43 @@
         <h2>
         eerie ambient audio (coming soon)
         </h2>
+        <img src="ghost.png"/>
+        <p>this is the ghost Bob, he's scared of being outside</p>
+        <div class="carousel-wrapper">
+            <div class="cd-carousel">
+                <div class="cd">eery track 1</div>
+                <div class="cd">trees</div>
+                <div class="cd">leaves</div>
+                <div class="cd">claws</div>
+                <div class="cd">screams</div>
+                <div class="cd">whispers</div>
+                <div class="cd">CD 7</div>
+            </div>
+        </div>
         <button class="fill">
             share your ambience
         </button>
+    <script>
+        const carousel = document.querySelector('.cd-carousel');
+        let isDown = false;
+        let startX;
+        let scrollLeft;
+
+        carousel.addEventListener('mousedown', (e) => {
+            isDown = true;
+            carousel.classList.add('active');
+            startX = e.pageX - carousel.offsetLeft;
+            scrollLeft = carousel.scrollLeft;
+        });
+        carousel.addEventListener('mouseleave', () => isDown = false);
+        carousel.addEventListener('mouseup', () => isDown = false);
+        carousel.addEventListener('mousemove', (e) => {
+            if (!isDown) return;
+            e.preventDefault();
+            const x = e.pageX - carousel.offsetLeft;
+            const walk = (x - startX) * 2; // Scroll speed
+            carousel.scrollLeft = scrollLeft - walk;
+        });
+    </script>
     </body>
 <html>
