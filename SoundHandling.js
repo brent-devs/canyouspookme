@@ -14,6 +14,10 @@ export function SoundHandling() {
     haunted_wind: 'haunted_wind.ogg',
     waterdrip1: 'waterdrip_1.ogg',
     waterdrip2: 'waterdrip_2.ogg',
+    mountain: 'dark_mountain.ogg',
+    birds: 'birds.ogg',
+    clock: 'clock.ogg',
+    crow: 'crow.ogg',
   };
 
   const sources = {};
