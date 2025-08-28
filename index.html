@@ -1,55 +1,39 @@
+<!doctype html>
 <html>
     <head>
         <link rel="stylesheet" href="style.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Gaegu&display=swap" rel="stylesheet">
-		<title>can you spook me?</title>
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.1/src/regular/style.css"
+        />
+        <title>can you spook me?</title>
 	</head>
     <body>
-        <h1>
-        can you spook me?
-        </h1>
-        <h2>
-        eerie ambient audio (coming soon)
-        </h2>
-        <img src="ghost.png"/>
-        <p>this is the ghost Bob, he's scared of being outside</p>
-        <div class="carousel-wrapper">
-            <div class="cd-carousel">
-                <div class="cd">eery track 1</div>
-                <div class="cd">trees</div>
-                <div class="cd">leaves</div>
-                <div class="cd">claws</div>
-                <div class="cd">screams</div>
-                <div class="cd">whispers</div>
-                <div class="cd">CD 7</div>
-            </div>
+        <h1>can you spook me?</h1>
+        <img id="ghost" src="ghost.png" alt="ghost">
+        <p>this is the ghost Bob, he has <b>aquaphobia</b>.</p>
+        <div class="track-container" style="top:50px; left:50px;">
+            <div class="cd" id="waterdrip1"><i class="ph ph-drop"></i></div>
+            <input type="range" min="0" max="1" step="0.01" value="0" data-id="waterdrip1">
         </div>
-        <button class="fill">
-            share your ambience
-        </button>
-    <script>
-        const carousel = document.querySelector('.cd-carousel');
-        let isDown = false;
-        let startX;
-        let scrollLeft;
-
-        carousel.addEventListener('mousedown', (e) => {
-            isDown = true;
-            carousel.classList.add('active');
-            startX = e.pageX - carousel.offsetLeft;
-            scrollLeft = carousel.scrollLeft;
-        });
-        carousel.addEventListener('mouseleave', () => isDown = false);
-        carousel.addEventListener('mouseup', () => isDown = false);
-        carousel.addEventListener('mousemove', (e) => {
-            if (!isDown) return;
-            e.preventDefault();
-            const x = e.pageX - carousel.offsetLeft;
-            const walk = (x - startX) * 2; // Scroll speed
-            carousel.scrollLeft = scrollLeft - walk;
-        });
-    </script>
+        <div class="track-container" style="top:50px; left:50px;">
+            <div class="cd" id="waterdrip2"><i class="ph ph-drop"></i><i class="ph ph-drop"></i></div>
+            <input type="range" min="0" max="1" step="0.01" value="0" data-id="waterdrip2">
+        </div>
+        <div class="track-container" style="top:120px; left:260px;">
+            <div class="cd" id="haunted_wind"><i class="ph ph-wind"></i></div>
+            <input type="range" min="0" max="1" step="0.01" value="0" data-id="haunted_wind">
+        </div>
+        <span id="sharelink" class="fill">
+            share your ambience <i class="ph ph-link-simple"></i>
+        </span>
+        <span id="infoButton">
+            <i class="ph ph-info"></i>
+        </span>
+        <script type="module" src="main.js"></script>
     </body>
-<html>
+</html>

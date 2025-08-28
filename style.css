@@ -4,6 +4,8 @@
     --action-colour: red;
 
     --font-size: 24px;
+    --large-font-size: 30px;
+    --largest-font-size: 36px;
 }
 
 html {
@@ -18,6 +20,17 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+
+#ghost {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 200px;
+    z-index: 1;
+    pointer-events: none;
 }
 
 h1, h2 {
@@ -35,31 +48,6 @@ h2 {
     font-family: "Gaegu", sans-serif;
     font-weight: 400;
     user-select: none;
-}
-
-.fill:hover,
-.fill:focus {
- background-color: var(--foreground-colour);
-}
-
-button {
-  background: none;
-  border: 2px solid var(--foreground-colour);
-  font: inherit;
-  line-height: 1;
-  margin: 0.5em;
-  padding: 1em 1em;
-  border-radius: 999px;
-}
-
-button {  
-  color: var(--foreground-colour);
-  transition: 0.5s;
-  
-  &:hover,
-  &:focus { 
-    color: var(--action-colour);
-  }
 }
 
 img {
@@ -93,10 +81,54 @@ img {
     align-items: center;
     justify-content: center;
     font-family: 'Gaegu', cursive;
-    font-size: 18px;
+    font-size: var(--large-font-size);
     color: var(--foreground-colour);
     scroll-snap-align: center;
     flex-shrink: 0;
     border: 3px solid var(--foreground-colour);
     user-select: none;
+}
+
+.cd {
+    width: 100px;
+    height: 100px;
+    background: black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: grab;
+    user-select: none;
+}
+input[type="range"] { width: 100px; }
+
+.track-container {
+    position: absolute;
+}
+
+#infoButton, #sharelink  {
+    position: fixed;
+    bottom: 48px;
+    z-index: 2;
+    font-size: var(--largest-font-size);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3em;
+    user-select: none;
+}
+
+#infoButton {
+    right: 48px;
+}
+
+#infoButton:hover,
+#infoButton:focus {
+    cursor: pointer;
+    color: var(--action-colour);
+}
+
+#sharelink:hover,
+#sharelink:focus {
+    cursor: pointer;
+    color: var(--action-colour);
 }
