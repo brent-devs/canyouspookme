@@ -24,6 +24,7 @@ whisper.mp3 - https://pixabay.com/sound-effects/whisper5-94457/ (pixabay content
 hospital.mp3 - https://pixabay.com/sound-effects/hospital-busy-x-ray-room-tone-56441/ (pixabay content license) -  https://pixabay.com/users/freesound_community-46691455/
 campfire.mp3 - https://pixabay.com/sound-effects/campfire-crackling-fireplace-sound-119594/ (pixabay content license) - https://pixabay.com/users/soundsforyou-4861230/ 
 thunder.mp3 - https://pixabay.com/sound-effects/natural-thunder-113219/ (pixabay content license) - https://pixabay.com/users/soundsforyou-4861230/ 
-rain.mp3 - https://pixabay.com/sound-effects/rain-in-forest-birds-nature-111405/ (pixabay content license) - https://pixabay.com/users/soundsforyou-4861230/ 
+rain.mp3 - https://pixabay.com/sound-effects/calm-rain-ambient-sound-15-min-147850/ (pixabay content license) - https://pixabay.com/users/soundsforyou-4861230/ 
 bells.mp3 - https://pixabay.com/sound-effects/wind-chimes-bells-115747/ (pixabay content license) - https://pixabay.com/users/soundsforyou-4861230/ 
 laugh.mp3 - https://pixabay.com/sound-effects/evil-laugh-multi-34044/ (pixabay content license) - https://pixabay.com/users/freesound_community-46691455/
+footsteps.mp3 - https://pixabay.com/sound-effects/footsteps-cellar-26890/ (pixabay content license) - https://pixabay.com/users/freesound_community-46691455/
