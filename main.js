@@ -1,6 +1,6 @@
 import { DragHandling } from './DragHandling.js';
 import { SoundHandling } from './SoundHandling.js';
-import { RandomizeOrLoadCDPositions, GetShareTag } from './CD.js';
+import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent } from './CD.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     RandomizeOrLoadCDPositions();
@@ -21,4 +21,8 @@ document.addEventListener('DOMContentLoaded', () => {
             });
         });
     }
+});
+
+window.addEventListener('resize', () => {
+    UpdateCDPositionsFromPercent();
 });

@@ -1,4 +1,5 @@
 import { BOUNDARY_X, BOUNDARY_Y } from './constants.js';
+import { SetCDPosition } from './CD.js';
 
 export function DragHandling(updatePanner, enableAudio) {
     const cds = document.querySelectorAll('.cd');
@@ -32,8 +33,7 @@ export function DragHandling(updatePanner, enableAudio) {
         newX = Math.min(Math.max(newX, boundaryX), maxX);
         newY = Math.min(Math.max(newY, boundaryY), maxY);
 
-        currentDrag.style.left = `${newX}px`;
-        currentDrag.style.top = `${newY}px`;
+        SetCDPosition(currentDrag, newX, newY);
 
         const cd = currentDrag.querySelector('.cd');
         if (cd) updatePanner(cd.id);
