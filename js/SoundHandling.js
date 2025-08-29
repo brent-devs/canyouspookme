@@ -1,11 +1,20 @@
 export function SoundHandling() {
-  const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+  let audioContext = null;
   let audioStarted = false;
+  let soundsLoaded = false;
 
   function enableAudio() {
+    if (!audioContext) {
+      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+    }
+    
     if (!audioStarted) {
       audioContext.resume().then(() => {
         audioStarted = true;
+        if (!soundsLoaded) {
+          loadAllSounds();
+          soundsLoaded = true;
+        }
       });
     }
   }
@@ -39,6 +48,8 @@ const sounds = {
   const pendingGains = {};
 
   async function loadSound(id, url) {
+    if (!audioContext) return;
+    
     try {
       const response = await fetch(url);
       const arrayBuffer = await response.arrayBuffer();
@@ -79,6 +90,13 @@ const sounds = {
     }
   }
 
+  function loadAllSounds() {
+    for (const [id, file] of Object.entries(sounds)) {
+      loadSound(id, file);
+    }
+    setTimeout(initializePanners, 100);
+  }
+
   function updatePanner(id) {
     const cd = document.getElementById(id);
     const panner = panners[id];
@@ -99,10 +117,6 @@ const sounds = {
     try { panner.setPosition(x, y, -0.5); } catch(e) {}
   }
 
-  for (const [id, file] of Object.entries(sounds)) {
-    loadSound(id, file);
-  }
-
   const sliders = document.querySelectorAll('input[type="range"]');
   sliders.forEach(slider => {
     slider.addEventListener('input', (e) => {
@@ -118,7 +132,9 @@ const sounds = {
     slider.addEventListener('change', enableAudio);
   });
 
-  Object.keys(sounds).forEach(id => updatePanner(id));
+  function initializePanners() {
+    Object.keys(sounds).forEach(id => updatePanner(id));
+  }
 
   return { enableAudio, updatePanner };
 }

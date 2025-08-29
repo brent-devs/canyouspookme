@@ -12,6 +12,15 @@ document.addEventListener('DOMContentLoaded', () => {
     const game = new Game();
     const modal = new Modal();
 
+    const enableAudioOnInteraction = () => {
+        enableAudio();
+        document.removeEventListener('touchstart', enableAudioOnInteraction);
+        document.removeEventListener('mousedown', enableAudioOnInteraction);
+    };
+    
+    document.addEventListener('touchstart', enableAudioOnInteraction);
+    document.addEventListener('mousedown', enableAudioOnInteraction);
+
     const urlParams = new URLSearchParams(window.location.search);
     const shareData = urlParams.get('share');
     
