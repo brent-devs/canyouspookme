@@ -6,20 +6,35 @@ import { Modal } from './Modal.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     RandomizeOrLoadCDPositions();
-    const { enableAudio, updatePanner } = SoundHandling();
+    const { enableAudio, updatePanner, playTestTone } = SoundHandling();
     DragHandling(updatePanner, enableAudio);
     
     const game = new Game();
     const modal = new Modal();
 
-    const enableAudioOnInteraction = () => {
+    // iOS audio initialization - multiple interaction types
+    const enableAudioOnInteraction = (event) => {
+        // Prevent default to ensure we get the interaction
+        event.preventDefault();
         enableAudio();
+        
+        // Test audio after a short delay
+        setTimeout(() => {
+            playTestTone();
+        }, 500);
+        
+        // Remove all listeners after successful interaction
         document.removeEventListener('touchstart', enableAudioOnInteraction);
         document.removeEventListener('mousedown', enableAudioOnInteraction);
+        document.removeEventListener('click', enableAudioOnInteraction);
+        document.removeEventListener('touchend', enableAudioOnInteraction);
     };
     
-    document.addEventListener('touchstart', enableAudioOnInteraction);
+    // Add multiple event listeners for iOS compatibility
+    document.addEventListener('touchstart', enableAudioOnInteraction, { passive: false });
     document.addEventListener('mousedown', enableAudioOnInteraction);
+    document.addEventListener('click', enableAudioOnInteraction);
+    document.addEventListener('touchend', enableAudioOnInteraction);
 
     const urlParams = new URLSearchParams(window.location.search);
     const shareData = urlParams.get('share');

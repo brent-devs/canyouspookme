@@ -4,17 +4,42 @@ export function SoundHandling() {
   let soundsLoaded = false;
 
   function enableAudio() {
+    console.log('enableAudio called, audioContext state:', audioContext?.state);
+    
     if (!audioContext) {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      // Create AudioContext with iOS-compatible settings
+      audioContext = new (window.AudioContext || window.webkitAudioContext)({
+        latencyHint: 'interactive',
+        sampleRate: 44100
+      });
+      console.log('AudioContext created, state:', audioContext.state);
     }
     
     if (!audioStarted) {
+      // iOS specific sequence?
       audioContext.resume().then(() => {
-        audioStarted = true;
-        if (!soundsLoaded) {
-          loadAllSounds();
-          soundsLoaded = true;
+        console.log('AudioContext resumed, state:', audioContext.state);
+        if (audioContext.state === 'running') {
+          audioStarted = true;
+          if (!soundsLoaded) {
+            loadAllSounds();
+            soundsLoaded = true;
+          }
+        } else {
+          setTimeout(() => {
+            if (audioContext.state === 'suspended') {
+              audioContext.resume().then(() => {
+                audioStarted = true;
+                if (!soundsLoaded) {
+                  loadAllSounds();
+                  soundsLoaded = true;
+                }
+              });
+            }
+          }, 100);
         }
+      }).catch(err => {
+        console.error('Failed to resume audio context:', err);
       });
     }
   }
@@ -79,12 +104,19 @@ const sounds = {
       panner.connect(gainNode);
       gainNode.connect(audioContext.destination);
 
-      source.start();
-      sources[id] = source;
-      panners[id] = panner;
-      gains[id] = gainNode;
+      // iOS-specific: Start with a small delay to ensure context is ready
+      setTimeout(() => {
+        try {
+          source.start();
+          sources[id] = source;
+          panners[id] = panner;
+          gains[id] = gainNode;
+          updatePanner(id);
+        } catch (err) {
+          console.error('Failed to start source for', id, err);
+        }
+      }, 50);
 
-      updatePanner(id);
     } catch (err) {
       console.error('Failed to load', id, err);
     }
@@ -136,5 +168,32 @@ const sounds = {
     Object.keys(sounds).forEach(id => updatePanner(id));
   }
 
-  return { enableAudio, updatePanner };
+  // Test tone function for iOS debugging
+  function playTestTone() {
+    if (!audioContext || audioContext.state !== 'running') {
+      console.log('Cannot play test tone - AudioContext not ready');
+      return;
+    }
+    
+    try {
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+      
+      oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4 note
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+      
+      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      
+      oscillator.start(audioContext.currentTime);
+      oscillator.stop(audioContext.currentTime + 0.5);
+      
+      console.log('Test tone played successfully');
+    } catch (err) {
+      console.error('Failed to play test tone:', err);
+    }
+  }
+
+  return { enableAudio, updatePanner, playTestTone };
 }
