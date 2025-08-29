@@ -18,15 +18,43 @@
 	</head>
     <body>
         <h1>can you spook me?</h1>
-        <div class="mode-buttons">
-            <button id="spookMode" class="mode-button active">Spook Mode</button>
-            <button id="freestyleMode" class="mode-button">Freestyle Mode</button>
-        </div>
+            <div class="mode-buttons">
+        <button id="spookMode" class="mode-button active">Spook Mode</button>
+        <button id="freestyleMode" class="mode-button">Freestyle Mode</button>
+    </div>
         <p id="objective">can you spook me?</p>
 
-        <div class="ghost-container">
-            <img id="ghost" src="ghost.png" alt="ghost">
+            <div class="ghost-container">
+        <img id="ghost" src="ghost.png" alt="ghost">
+    </div>
+
+    <div id="infoModal" class="modal">
+        <div class="modal-content">
+
+            <div class="modal-tabs">
+                <button class="tab-button active" data-tab="how-to">Controls</button>
+                <button class="tab-button" data-tab="credits">Credits</button>
+                <button class="tab-button" data-tab="about">About</button>
+            </div>
+            <div class="modal-body">
+                <div id="how-to" class="tab-content active">
+                    <p>Increase or decrease a slider to control a cd's volume.</p>
+                    <p>Click and drag cd's to move them around.</p>
+                    <p>Click the mode buttons to spook ghosts or simply make ambient sounds.</p>
+                </div>
+                <div id="credits" class="tab-content">
+                    <p>sound effect sources listed <a href="https://github.com/ZackWhelm/canyouspookme#sound-log" target="_blank">here</a></p>
+                    <p>inspired by <a href="https://neal.fun/ambient-chaos/" target="_blank">Ambient Chaos</a></p>
+                    <p>made with plain old <a href="https://github.com/ZackWhelm/canyouspookme" target="_blank">js/css/html</a></p>
+                </div>
+                <div id="about" class="tab-content">
+                    <p>Made by Zack Whelm. Check out my <a href="https://zackwhelm.dev/" target="_blank">website</a>.</p>
+                    <p>Found a bug? Tweet at me <a href="https://x.com/WhelmGameDev" target="_blank">@WhelmGameDev</a>.</p>
+
+                </div>
+            </div>
         </div>
+    </div>
         <div class="track-container">
             <div class="cd" id="waterdrip1"><i class="ph ph-drop"></i></div>
             <input type="range" min="0" max="1" step="0.01" value="0" data-id="waterdrip1">

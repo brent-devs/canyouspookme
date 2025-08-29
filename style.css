@@ -109,6 +109,21 @@ h1 {
     border-color: var(--action-colour);
 }
 
+.info-button {
+    background: none;
+    border: none;
+    font-size: var(--largest-font-size);
+    cursor: pointer;
+    padding: var(--spacing-two);
+    border-radius: 4px;
+    transition: all 0.3s ease;
+    color: var(--foreground-colour);
+}
+
+.info-button:hover {
+    color: var(--action-colour);
+}
+
 h2 {
     font-family: "Gaegu", sans-serif;
     font-weight: 400;
@@ -198,5 +213,100 @@ input[type="range"] {
 #sharelink:hover,
 #sharelink:focus {
     cursor: pointer;
+    color: var(--action-colour);
+}
+
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    transition: opacity 0.75s ease;
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: var(--background-colour);
+    border: 2px solid var(--foreground-colour);
+    border-radius: var(--spacing-three);
+    width: 90%;
+    max-width: 600px;
+    max-height: 80vh;
+    overflow: hidden;
+    transform: scale(0.8);
+    transition: transform 1.0s ease;
+}
+
+.modal.show .modal-content {
+    transform: scale(1);
+}
+
+
+
+.modal-tabs {
+    display: flex;
+    background-color: var(--background-colour);
+    border-bottom: 1px solid var(--foreground-colour);
+}
+
+.tab-button {
+    flex: 1;
+    background: none;
+    border: none;
+    color: var(--foreground-colour);
+    padding: var(--spacing-three);
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.3s ease;
+    border-bottom: 3px solid transparent;
+}
+
+.tab-button:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.tab-button.active {
+    border-bottom-color: var(--foreground-colour);
+    background-color: var(--foreground-colour);
+    color: var(--background-colour);
+}
+
+.modal-body {
+    padding: var(--spacing-four);
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.tab-content {
+    display: none;
+    color: var(--foreground-colour);
+    line-height: 1.6;
+}
+
+.tab-content.active {
+    display: block;
+}
+
+.tab-content h3 {
+    color: var(--foreground-colour);
+    margin-top: 0;
+    margin-bottom: var(--spacing-three);
+}
+
+.tab-content p {
+    margin-bottom: var(--spacing-three);
+}
+
+a {
     color: var(--action-colour);
 }
