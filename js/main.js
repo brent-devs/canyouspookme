@@ -9,9 +9,48 @@ document.addEventListener('DOMContentLoaded', () => {
     const { enableAudio, updatePanner } = SoundHandling();
     DragHandling(updatePanner, enableAudio);
     
-    // Initialize the game
     const game = new Game();
     const modal = new Modal();
+
+    const urlParams = new URLSearchParams(window.location.search);
+    const shareData = urlParams.get('share');
+    
+    if (shareData) {
+        const overlay = document.createElement('div');
+        overlay.style.cssText = `
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            cursor: pointer;
+        `;
+        
+        const message = document.createElement('div');
+        message.style.cssText = `
+            color: white;
+            font-size: 24px;
+            text-align: center;
+            font-family: 'Gaegu', sans-serif;
+        `;
+        message.innerHTML = 'click anywhere to start';
+        
+        overlay.appendChild(message);
+        document.body.appendChild(overlay);
+        
+        const startAudio = () => {
+            enableAudio();
+            document.body.removeChild(overlay);
+            document.removeEventListener('click', startAudio);
+        };
+        
+        overlay.addEventListener('click', startAudio);
+    }
 
     const shareButton = document.getElementById('sharelink');
     if (shareButton) {
