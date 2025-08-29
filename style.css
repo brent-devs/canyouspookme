@@ -2,6 +2,7 @@
     --background-colour: hsl(0, 0%, 0%);
     --foreground-colour: #f2f2f2;
     --action-colour: red;
+    --action-colour-light: #ff6666;
     --spacing-one: 4px;
     --spacing-two: 8px;
     --spacing-three: 12px;
@@ -183,6 +184,64 @@ img {
 input[type="range"] { 
     width: 100px; 
     color: var(--action-colour);
+    background: var(--action-colour-light);
+    height: 4px;
+    border-radius: 2px;
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+input[type="range"]::-webkit-slider-track {
+    background: var(--action-colour-light);
+    height: 4px;
+    border-radius: 2px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    background: var(--action-colour);
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+input[type="range"]::-moz-range-track {
+    background: var(--action-colour-light);
+    height: 4px;
+    border-radius: 2px;
+    border: none;
+}
+
+input[type="range"]::-moz-range-thumb {
+    background: var(--action-colour);
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+input[type="range"]::-ms-track {
+    background: var(--action-colour-light);
+    height: 4px;
+    border-radius: 2px;
+    border: none;
+}
+
+input[type="range"]::-ms-thumb {
+    background: var(--action-colour);
+    height: 16px;
+    width: 16px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
 .track-container {
