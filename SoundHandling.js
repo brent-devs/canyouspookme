@@ -10,15 +10,28 @@ export function SoundHandling() {
     }
   }
 
-  const sounds = {
-    haunted_wind: 'haunted_wind.ogg',
-    waterdrip1: 'waterdrip_1.ogg',
-    waterdrip2: 'waterdrip_2.ogg',
-    mountain: 'dark_mountain.ogg',
-    birds: 'birds.ogg',
-    clock: 'clock.ogg',
-    crow: 'crow.ogg',
-  };
+const sounds = {
+    haunted_wind: '/sounds/haunted_wind.ogg',
+    waterdrip1: '/sounds/waterdrip_1.ogg',
+    waterdrip2: '/sounds/waterdrip_2.ogg',
+    mountain: '/sounds/dark_mountain.ogg',
+    birds: '/sounds/birds.ogg',
+    crow: '/sounds/crow.ogg',
+    clock: '/sounds/clock.ogg',
+    footsteps: '/sounds/footsteps.ogg',
+    bell: '/sounds/bell.ogg',
+    rain: '/sounds/rain.ogg',
+    lightning: '/sounds/lightning.ogg',
+    laugh: '/sounds/laugh.ogg',
+    whispers: '/sounds/whispers.ogg',
+    piano: '/sounds/piano.ogg',
+    hospital: '/sounds/hospital.ogg',
+    campfire: '/sounds/campfire.ogg',
+    knife: '/sounds/knife.ogg',
+    axe: '/sounds/axe.ogg',
+    waves: '/sounds/waves.ogg',
+    typewriter: '/sounds/typewriter.ogg'
+};
 
   const sources = {};
   const panners = {};
