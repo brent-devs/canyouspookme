@@ -18,19 +18,19 @@ const sounds = {
     birds: '/sounds/birds.ogg',
     crow: '/sounds/crow.ogg',
     clock: '/sounds/clock.ogg',
-    footsteps: '/sounds/footsteps.ogg',
-    bell: '/sounds/bell.ogg',
-    rain: '/sounds/rain.ogg',
-    lightning: '/sounds/lightning.ogg',
-    laugh: '/sounds/laugh.ogg',
-    whispers: '/sounds/whispers.ogg',
-    piano: '/sounds/piano.ogg',
-    hospital: '/sounds/hospital.ogg',
-    campfire: '/sounds/campfire.ogg',
-    knife: '/sounds/knife.ogg',
-    axe: '/sounds/axe.ogg',
+    footsteps: '/sounds/footsteps.mp3',
+    bell: '/sounds/bells.mp3',
+    rain: '/sounds/rain.mp3',
+    lightning: '/sounds/thunder.mp3',
+    laugh: '/sounds/laugh.mp3',
+    whispers: '/sounds/whisper.mp3',
+    piano: '/sounds/piano.mp3',
+    hospital: '/sounds/hospital.mp3',
+    campfire: '/sounds/campfire.mp3',
+    knife: '/sounds/knives.mp3',
+    axe: '/sounds/axe.mp3',
     waves: '/sounds/waves.ogg',
-    typewriter: '/sounds/typewriter.ogg'
+    typewriter: '/sounds/typewriter.mp3'
 };
 
   const sources = {};
