@@ -1,11 +1,15 @@
 import { DragHandling } from './DragHandling.js';
 import { SoundHandling } from './SoundHandling.js';
 import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent } from './CD.js';
+import { Game } from './Game.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     RandomizeOrLoadCDPositions();
     const { enableAudio, updatePanner } = SoundHandling();
     DragHandling(updatePanner, enableAudio);
+    
+    // Initialize the game
+    const game = new Game();
 
     const shareButton = document.getElementById('sharelink');
     if (shareButton) {

@@ -2,7 +2,12 @@
     --background-colour: hsl(0, 0%, 0%);
     --foreground-colour: #f2f2f2;
     --action-colour: red;
-
+    --spacing-one: 4px;
+    --spacing-two: 8px;
+    --spacing-three: 12px;
+    --spacing-four: 16px;
+    --spacing-five: 16px;
+    --small-font-size: 18px;
     --font-size: 24px;
     --large-font-size: 30px;
     --largest-font-size: 36px;
@@ -20,17 +25,46 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    user-select: none;
+    padding: var(--spacing-five);
 }
 
 
-#ghost {
+.ghost-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 200px;
+    width: 140px;
     z-index: 1;
     pointer-events: none;
+    --mask-height: 0%;
+    --fear-intensity: 0;
+}
+
+#ghost {
+    width: 100%;
+    filter: brightness(0) saturate(100%) invert(1);
+    transition: filter 0.3s ease;
+    --mask-height: 0%;
+}
+
+#ghost.fear {
+    filter: brightness(0) saturate(100%) invert(1) sepia(1) saturate(10000%) hue-rotate(0deg);
+    mask: linear-gradient(to top, 
+        black 0%, 
+        black calc(var(--mask-height) * 1%), 
+        transparent calc(var(--mask-height) * 1%)
+    );
+    -webkit-mask: linear-gradient(to top, 
+        black 0%, 
+        black calc(var(--mask-height) * 1%), 
+        transparent calc(var(--mask-height) * 1%)
+    );
+}
+
+p {
+    margin: var(--spacing-one);
 }
 
 h1, h2 {
@@ -42,6 +76,37 @@ h1 {
     font-family: "Creepster", system-ui;
     font-weight: 500;
     user-select: none;
+}
+
+.mode-buttons {
+    display: flex;
+    gap: 10px;
+    margin: 10px 0;
+    justify-content: center;
+}
+
+.mode-button {
+    padding: var(--spacing-two) var(--spacing-two);
+    font-family: "Gaegu", sans-serif;
+    font-size: var(--small-font-size);
+    background: transparent;
+    color: var(--foreground-colour);
+    border: 2px solid var(--foreground-colour);
+    border-radius: 16px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    user-select: none;
+}
+
+.mode-button:hover {
+    background: var(--foreground-colour);
+    color: var(--background-colour);
+}
+
+.mode-button.active {
+    background: var(--action-colour);
+    color: var(--background-colour);
+    border-color: var(--action-colour);
 }
 
 h2 {
@@ -100,7 +165,10 @@ img {
     cursor: grab;
     user-select: none;
 }
-input[type="range"] { width: 100px; }
+input[type="range"] { 
+    width: 100px; 
+    color: var(--action-colour);
+}
 
 .track-container {
     position: absolute;
@@ -108,7 +176,7 @@ input[type="range"] { width: 100px; }
 
 #infoButton, #sharelink  {
     position: fixed;
-    bottom: 48px;
+    bottom:  var(--spacing-five);
     z-index: 2;
     font-size: var(--largest-font-size);
     display: inline-flex;
@@ -118,7 +186,7 @@ input[type="range"] { width: 100px; }
 }
 
 #infoButton {
-    right: 48px;
+    right: var(--spacing-five);
 }
 
 #infoButton:hover,

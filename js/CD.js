@@ -10,6 +10,20 @@ function decodeBase64(char) {
     return BASE64.indexOf(char);
 }
 
+function encodeCompressed(posX, posY, volume) {
+    const pos = posX * 64 + posY;
+    const vol = Math.round(volume * 49);
+    return encodeBase64(Math.floor(pos / 64)) + encodeBase64(pos % 64) + encodeBase64(vol);
+}
+
+function decodeCompressed(str) {
+    const posX = decodeBase64(str[0]) * 64 + decodeBase64(str[1]);
+    const posY = posX % 64;
+    const xPercent = Math.floor(posX / 64);
+    const volume = decodeBase64(str[2]) / 49;
+    return { posX: xPercent, posY, volume };
+}
+
 function calculatePosition(xPercent, yPercent, vw, vh, cdWidth, cdHeight, boundaryX, boundaryY) {
     const posX = boundaryX + (xPercent / 63) * (vw - cdWidth - boundaryX * 2);
     const posY = boundaryY + (yPercent / 63) * (vh - cdHeight - boundaryY * 2);
@@ -40,29 +54,34 @@ export function RandomizeOrLoadCDPositions() {
     const vh = VIEWPORT_HEIGHT();
     const boundaryX = BOUNDARY_X();
     const boundaryY = BOUNDARY_Y();
-    const minDistance = 32;
+    const minDistance = 96;
 
     const deadzone = {
-        x: vw * 0.4,
-        y: vh * 0.4,
-        width: vw * 0.2,
-        height: vh * 0.2
+        x: vw * 0.375,
+        y: vh * 0.375,
+        width: vw * 0.25,
+        height: vh * 0.25
     };
 
     const urlParams = new URLSearchParams(window.location.search);
     const shareData = urlParams.get('share');
 
-    if (shareData && shareData.length === cds.length * 2) {
+    if (shareData && shareData.length >= cds.length * 3) {
         let index = 0;
         cds.forEach(cd => {
-            const part = shareData.slice(index, index + 2);
-            const value = decodeBase64(part[0]) * 64 + decodeBase64(part[1]);
-            const xPercent = Math.floor(value / 64);
-            const yPercent = value % 64;
+            const part = shareData.slice(index, index + 3);
+            const { posX: xPercent, posY: yPercent, volume } = decodeCompressed(part);
+            
             const { posX, posY } = calculatePosition(xPercent, yPercent, vw, vh, cd.offsetWidth, cd.offsetHeight, boundaryX, boundaryY);
-
             SetCDPosition(cd, posX, posY);
-            index += 2;
+            
+            const slider = cd.querySelector('input[type="range"]');
+            if (slider) {
+                slider.value = volume;
+                slider.dispatchEvent(new Event('input'));
+            }
+            
+            index += 3;
         });
     } else {
         const positions = [];
@@ -105,8 +124,11 @@ export function GetShareTag() {
     return cds.map(cd => {
         const xPercent = Math.round(((parseFloat(cd.style.left) - boundaryX) / (vw - cd.offsetWidth - boundaryX * 2)) * 63);
         const yPercent = Math.round(((parseFloat(cd.style.top) - boundaryY) / (vh - cd.offsetHeight - boundaryY * 2)) * 63);
-        const value = xPercent * 64 + yPercent;
-        return encodeBase64(Math.floor(value / 64)) + encodeBase64(value % 64);
+        
+        const slider = cd.querySelector('input[type="range"]');
+        const volume = slider ? parseFloat(slider.value) : 0;
+        
+        return encodeCompressed(xPercent, yPercent, volume);
     }).join('');
 }
 
