@@ -39,18 +39,23 @@ export class Ghost {
     updateAppearance() {
         if (!this.element) return;
 
-        const ghostImage = this.element.querySelector('#ghost');
-        if (!ghostImage) return;
+        // Use the animated ghost element directly
+        const ghostElement = this.element;
+        if (!ghostElement) return;
 
         if (this.fearScore > 0) {
             const intensity = Math.min(this.fearScore / 100, 1);
-            const maskHeight = intensity * 100;
             
-            ghostImage.classList.add('fear');
-            ghostImage.style.setProperty('--mask-height', `${maskHeight}%`);
+            // Add fear class to the animated ghost
+            ghostElement.classList.add('fear');
+            ghostElement.style.setProperty('--fear-intensity', intensity);
+            
+            // Keep ghost white, don't change color
+            ghostElement.style.setProperty('--ghost-color', 'white');
         } else {
-            ghostImage.classList.remove('fear');
-            ghostImage.style.setProperty('--mask-height', '0%');
+            ghostElement.classList.remove('fear');
+            ghostElement.style.setProperty('--fear-intensity', 0);
+            ghostElement.style.setProperty('--ghost-color', 'white');
         }
     }
 

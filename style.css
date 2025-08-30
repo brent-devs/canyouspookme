@@ -31,38 +31,7 @@ body {
 }
 
 
-.ghost-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 140px;
-    z-index: 1;
-    pointer-events: none;
-    --mask-height: 0%;
-    --fear-intensity: 0;
-}
 
-#ghost {
-    width: 100%;
-    filter: brightness(0) saturate(100%) invert(1);
-    transition: filter 0.3s ease;
-    --mask-height: 0%;
-}
-
-#ghost.fear {
-    filter: brightness(0) saturate(100%) invert(1) sepia(1) saturate(10000%) hue-rotate(0deg);
-    mask: linear-gradient(to top, 
-        black 0%, 
-        black calc(var(--mask-height) * 1%), 
-        transparent calc(var(--mask-height) * 1%)
-    );
-    -webkit-mask: linear-gradient(to top, 
-        black 0%, 
-        black calc(var(--mask-height) * 1%), 
-        transparent calc(var(--mask-height) * 1%)
-    );
-}
 
 p {
     margin: var(--spacing-one);
@@ -129,29 +98,6 @@ h2 {
     font-family: "Gaegu", sans-serif;
     font-weight: 400;
     user-select: none;
-}
-
-img {
-    filter: brightness(0) saturate(100%) invert(1);
-}
-
-.carousel-wrapper {
-    width: 100%;
-    overflow: hidden;
-}
-
-.cd-carousel {
-    display: flex;
-    gap: 20px;
-    overflow-x: auto;
-    scroll-snap-type: x mandatory;
-    padding: 20px;
-    scrollbar-width: none; /* Hide scrollbar (Firefox) */
-    -ms-overflow-style: none; /* Hide scrollbar (IE/Edge) */
-}
-
-.cd-carousel::-webkit-scrollbar {
-    display: none; /* Hide scrollbar (Chrome/Safari) */
 }
 
 .cd {
@@ -368,4 +314,118 @@ input[type="range"]::-ms-thumb {
 
 a {
     color: var(--action-colour);
+}
+
+.ghost {
+    position: fixed;
+    z-index: 10;
+    transform-origin: center;
+    width: 90px;
+    height: 140px;
+    pointer-events: none;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.7);
+    --ghost-color: white;
+    --fear-intensity: 0;
+    transition: all 0.3s ease;
+}
+
+.ghost__head {
+    position: relative;
+    width: 100%;
+    height: 100px;
+}
+
+.ghost.fear {
+    filter: brightness(1.2) saturate(1.5);
+    animation: fear-shake 0.1s ease-in-out infinite;
+}
+
+@keyframes fear-shake {
+    0%, 100% { transform: translate(-50%, -50%) scale(0.7) rotate(0deg); }
+    25% { transform: translate(-50%, -50%) scale(0.7) rotate(1deg); }
+    75% { transform: translate(-50%, -50%) scale(0.7) rotate(-1deg); }
+}
+
+.ghost__eyes {
+    position: absolute;
+    z-index: 1;
+    width: 15px;
+    height: 15px;
+    top: 34px;
+    left: 50%;
+    transform: translate(-50%);
+    border-radius: 50px;
+    background: var(--ghost-color);
+    margin-left: -20px;
+    transform-origin: center;
+}
+
+.ghost__eyes {
+    box-shadow: 40px 0 0 black;
+    display: block;
+    visibility: visible;
+    background: black !important;
+}
+
+.ghost__mouth {
+    position: absolute;
+    z-index: 1;
+    top: 60px;
+    left: 40%;
+    border-radius: 20px 20px 12px 12px;
+    width: 25px;
+    height: 15px;
+    overflow: hidden;
+    background: black !important;
+    margin: 0;
+    right: auto;
+}
+
+.ghost__tail {
+    position: absolute;
+    z-index: -1;
+    top: 82px;
+    height: 55px;
+    width: 100%;
+    filter: url(#goo);
+}
+
+.ghost__tail:before {
+    content: '';
+    background: var(--ghost-color);
+    position: absolute;
+    bottom: 35px;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    border-radius: 40px 40px 5px 5px;
+}
+
+.ghost__rip {
+    width: 15px;
+    height: 28px;
+    background: var(--ghost-color);
+    position: absolute;
+    top: 15px;
+    left: 0;
+    box-shadow: -62px 0 0 var(--ghost-color), -31px 0 0 var(--ghost-color), 31px 0 0 var(--ghost-color), 62px 0 0 var(--ghost-color), 93px 0 0 var(--ghost-color);
+    border-radius: 50%;
+    animation: ghost-rips 1.2s linear infinite;
+}
+
+@keyframes ghost-rips {
+    0% {
+        left: 0;
+        top: 12px;
+    }
+    50% {
+        left: 31px;
+        top: 20px;
+    }
+    100% {
+        left: 62px;
+        top: 12px;
+    }
 }

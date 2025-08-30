@@ -20,9 +20,9 @@ export class Game {
     }
 
     createGhosts() {
-        const ghostContainer = document.querySelector('.ghost-container');
-        if (!ghostContainer) {
-            console.error('Ghost container not found');
+        const animatedGhost = document.querySelector('#animated-ghost');
+        if (!animatedGhost) {
+            console.error('Animated ghost not found');
             return;
         }
 
@@ -30,7 +30,7 @@ export class Game {
         const ghostNames = getRandomGhostNames(ghostOrder.length);
         
         ghostOrder.forEach((phobia, index) => {
-            const ghost = new Ghost(ghostNames[index], phobia.name, ghostContainer);
+            const ghost = new Ghost(ghostNames[index], phobia.name, animatedGhost);
             this.ghosts.push(ghost);
         });
 

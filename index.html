@@ -24,9 +24,37 @@
     </div>
         <p id="objective">can you spook me?</p>
 
-            <div class="ghost-container">
-        <img id="ghost" src="ghost.png" alt="ghost">
-    </div>
+        <div id="animated-ghost" class="ghost">
+            <div class="ghost__head">
+                <div class="ghost__eyes"></div>
+                <div class="ghost__mouth"></div>
+            </div>
+            <div class="ghost__tail">
+                <div class="ghost__rip"></div>
+            </div>
+        </div>
+
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" style="position: absolute; width: 0; height: 0;">
+            <defs>
+                <filter id="goo">
+                    <feGaussianBlur
+                        in="SourceGraphic"
+                        stdDeviation="10"
+                        result="ghost-blur" />
+                    <feColorMatrix
+                        in="ghost-blur"
+                        mode="matrix"
+                        values="
+                                1 0 0 0 0
+                                0 1 0 0 0
+                                0 0 1 0 0
+                                0 0 0 16 -7"
+                        result="ghost-gooey" />
+                </filter>
+            </defs>
+        </svg>
+
+
 
     <div id="infoModal" class="modal">
         <div class="modal-content">
@@ -142,5 +170,6 @@
             <i class="ph ph-info"></i>
         </span>
         <script type="module" src="js/main.js"></script>
+        <script type="module" src="js/GhostAnimation.js"></script>
     </body>
 </html>
