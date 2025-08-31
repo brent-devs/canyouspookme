@@ -44,10 +44,10 @@ class AnimatedGhost {
         
         this.el.style.transform = `translate(-50%, -50%) scale(${totalScale})`;
         
-        const eyeScale = 1 + fearIntensity * 0.3;
-        this.eyes.style.transform = `translateX(-50%) scale(${eyeScale})`;
+        this.eyes.style.transform = `translateX(-50%) scale(1)`;
         
-        this.mouth.style.transform = `scale(1)`;
+        const mouthScale = 1 + fearIntensity * 2;
+        this.mouth.style.transform = `scale(${mouthScale})`;
     }
 }
 
