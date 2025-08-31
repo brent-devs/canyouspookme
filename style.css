@@ -378,15 +378,12 @@ a {
     position: absolute;
     z-index: 1;
     top: 60px;
-    left: 40%;
+    left: 45%;
     border-radius: 50%;
     width: 8px;
     height: 8px;
-    transform-origin: center;
     overflow: hidden;
     background: black !important;
-    margin: 0;
-    right: auto;
 }
 
 .ghost__tail {
