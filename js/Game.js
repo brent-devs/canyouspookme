@@ -34,9 +34,6 @@ export class Game {
             const ghost = new Ghost(ghostNames[index], phobia.name, animatedGhost);
             this.ghosts.push(ghost);
         });
-
-        console.log(`Created ${this.ghosts.length} ghosts with different phobias`);
-        console.log('Ghost order:', this.ghosts.map(g => `${g.name} (${g.getPhobiaName()})`));
     }
 
     generateGhostOrder() {
@@ -126,8 +123,6 @@ export class Game {
         const newFearScore = currentGhost.calculateFearScore();
         currentGhost.updateFearScore(newFearScore);
         
-        console.log(`${currentGhost.name} (${currentGhost.getPhobiaName()}) fear score: ${currentGhost.getFearScore()}`);
-
         if (newFearScore >= 100 && !currentGhost.wasSpooked) {
             this.ghostSpooked(currentGhost);
         }

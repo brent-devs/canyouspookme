@@ -3,22 +3,16 @@ export function SoundHandling() {
   let audioStarted = false;
   let soundsLoaded = false;
 
-  function enableAudio() {
-    console.log('enableAudio called, audioContext state:', audioContext?.state);
-    
+  function enableAudio() {    
     if (!audioContext) {
-      // Create AudioContext with iOS-compatible settings
       audioContext = new (window.AudioContext || window.webkitAudioContext)({
         latencyHint: 'interactive',
         sampleRate: 44100
       });
-      console.log('AudioContext created, state:', audioContext.state);
     }
     
     if (!audioStarted) {
-      // iOS specific sequence?
       audioContext.resume().then(() => {
-        console.log('AudioContext resumed, state:', audioContext.state);
         if (audioContext.state === 'running') {
           audioStarted = true;
           if (!soundsLoaded) {
@@ -104,7 +98,6 @@ const sounds = {
       panner.connect(gainNode);
       gainNode.connect(audioContext.destination);
 
-      // iOS-specific: Start with a small delay to ensure context is ready
       setTimeout(() => {
         try {
           source.start();
@@ -189,7 +182,6 @@ const sounds = {
       oscillator.start(audioContext.currentTime);
       oscillator.stop(audioContext.currentTime + 0.5);
       
-      console.log('Test tone played successfully');
     } catch (err) {
       console.error('Failed to play test tone:', err);
     }

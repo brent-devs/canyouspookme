@@ -14,10 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const modal = new Modal();
     
     testSupabaseConnection().then(isConnected => {
-        if (isConnected) {
-            console.log('Supabase is ready for tracking ghost spooks!');
-        } else {
-            console.log('Supabase connection failed - spook tracking will be disabled');
+        if (!isConnected) {
+            // TODO(zack): show something that says servers are broken. 
         }
     });
 

@@ -4,38 +4,43 @@ const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
 const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function generateUserId() {
-    const userAgent = navigator.userAgent;
-    const screenRes = `${screen.width}x${screen.height}`;
-    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const fingerprint = `${userAgent}-${screenRes}-${timezone}`;
-    return btoa(fingerprint).slice(0, 32);
-}
+    let userId = localStorage.getItem('user_id');
+    if (!userId) {
+      userId = crypto.randomUUID();
+      localStorage.setItem('user_id', userId);
+    }
+    return userId;
+  }
 
-async function recordGhostSpook(id) {
+async function recordGhostSpook(ghostId) {
     try {
         const userId = generateUserId();
-        console.log('Attempting to record spook for id:', id);
-        console.log('User ID:', userId);
-        
-        const { data, error } = await supabaseClient
-            .from('spook_counts')
-            .upsert({
-                user_id: userId,
-                id: id
-            }, {
-                onConflict: 'user_id,id'
+
+        const { error: insertError } = await supabaseClient
+            .from('spooks')
+            .insert({
+                ghost_id: ghostId,
+                user_id: userId
             });
-            
-        if (error) {
-            console.error('Supabase error recording ghost spook:', error);
+
+        if (insertError) {
+            console.error('Error inserting spook event:', insertError);
+        }
+
+        const { data, error: rpcError } = await supabaseClient
+            .rpc('increment_spook_summary', {
+                ghost_id_input: ghostId,
+                user_id_input: userId
+            });
+
+        if (rpcError) {
+            console.error('Error updating spook summary:', rpcError);
             return false;
         }
-        
-        console.log('Ghost spook recorded successfully:', data);
         return true;
+
     } catch (error) {
         console.error('Network/connection error recording ghost spook:', error);
-        console.log('This might be due to network issues or Supabase being unavailable');
         return false;
     }
 }
@@ -60,21 +65,18 @@ async function getSpookStats() {
 
 async function testSupabaseConnection() {
     try {
-        console.log('Testing Supabase connection...');
         const { data, error } = await supabaseClient
             .from('spook_counts')
             .select('count')
             .limit(1);
             
         if (error) {
-            console.error('Supabase connection test failed:', error);
+            console.error('Connection test failed:', error);
             return false;
         }
-        
-        console.log('Supabase connection successful!');
         return true;
     } catch (error) {
-        console.error('Supabase connection test failed:', error);
+        console.error('Connection test failed:', error);
         return false;
     }
 }

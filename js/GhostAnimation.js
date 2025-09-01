@@ -8,14 +8,8 @@ class AnimatedGhost {
         this.mouth = document.querySelector('.ghost__mouth');
         this.eyes = document.querySelector('.ghost__eyes');
         
-        console.log('Animated ghost elements:', {
-            el: this.el,
-            mouth: this.mouth,
-            eyes: this.eyes
-        });
-        
         if (!this.el || !this.mouth || !this.eyes) {
-            console.warn('Animated ghost elements not found');
+            console.warn('Ghost elements not found');
             return;
         }
         
