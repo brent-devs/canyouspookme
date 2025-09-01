@@ -1,4 +1,4 @@
-import { BOUNDARY_X, BOUNDARY_Y } from './constants.js';
+import { BOUNDARY_X, BOUNDARY_Y } from './Constants.js';
 import { SetCDPosition } from './CD.js';
 
 export function DragHandling(updatePanner, enableAudio) {

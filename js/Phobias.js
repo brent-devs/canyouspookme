@@ -1,5 +1,6 @@
 export class Phobia {
-    constructor(name, description, sounds, difficulty, fearThreshold = 40, fearIncrement = 33.4) {
+    constructor(id, name, description, sounds, difficulty, fearThreshold = 40, fearIncrement = 33.4) {
+        this.id = id,
         this.name = name;
         this.description = description;
         this.sounds = sounds;
@@ -11,15 +12,17 @@ export class Phobia {
 
 export const PHOBIAS = {
     AQUAPHOBIA: new Phobia(
+        0,
         'Aquaphobia',
-        'Fear of water',
+        'Fear of water',    
         ['waterdrip1', 'waterdrip2', 'waves', 'rain'],
         'easy',
         25,
         33.4,
     ),
     AICHMOPHOBIA: new Phobia(
-        'Aichmophobia',
+        1,
+        'Aichmophobia', 
         'Fear of sharp objects',
         ['knife', 'axe'],
         'medium',
@@ -27,6 +30,7 @@ export const PHOBIAS = {
         50
     ),
     ANTHROPOPHOBIA: new Phobia(
+        2,
         'Anthropophobia',
         'Fear of people',
         ['whispers', 'footsteps', 'laugh', 'hospital'],
@@ -35,6 +39,7 @@ export const PHOBIAS = {
         33.4
     ),
     ORNITHOPHOBIA: new Phobia(
+        3,
         'Ornithophobia',
         'Fear of birds',
         ['birds', 'crow'],
@@ -43,6 +48,7 @@ export const PHOBIAS = {
         50,
     ),
     BIOPHOBIA: new Phobia(
+        4,
         'Biophobia',
         'Fear of nature',
         ['mountain', 'haunted_wind'],
@@ -51,6 +57,7 @@ export const PHOBIAS = {
         33.4
     ),
     PHOTOPHOBIA: new Phobia(
+        5,
         'Photophobia',
         'Fear of light',
         ['campfire', 'lightning'],

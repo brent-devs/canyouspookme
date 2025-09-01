@@ -1,6 +1,7 @@
 import { Ghost } from './Ghost.js';
 import { getAllPhobias, getRandomPhobiaByDifficulty, shuffleArray } from './Phobias.js';
 import { getRandomGhostNames } from './GhostNames.js';
+import { recordGhostSpook } from './supabase.js';
 
 export class Game {
     constructor() {
@@ -132,7 +133,7 @@ export class Game {
         }
     }
 
-    ghostSpooked(ghost) {
+    async ghostSpooked(ghost) {
         ghost.wasSpooked = true;
         
         const objectiveElement = document.getElementById('objective');
@@ -141,6 +142,12 @@ export class Game {
         }
 
         console.log(`${ghost.name} was spooked!`);
+
+        try {
+            await recordGhostSpook(ghost.phobia.id);
+        } catch (error) {
+            console.error('Failed to record spook:', error);
+        }
 
         setTimeout(() => {
             this.nextGhost();
