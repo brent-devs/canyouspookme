@@ -101,31 +101,46 @@ h2 {
 }
 
 .cd {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Gaegu', cursive;
-    font-size: var(--large-font-size);
-    color: var(--foreground-colour);
-    scroll-snap-align: center;
-    flex-shrink: 0;
-    border: 3px solid var(--foreground-colour);
-    user-select: none;
-}
-
-.cd {
-    width: 100px;
-    height: 100px;
-    background: black;
-    border-radius: 50%;
-    display: flex;
+    width: 74px;
+    height: 74px;
+    display: 32px;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     cursor: grab;
     user-select: none;
+}
+
+.cd svg {
+    width: 100%;
+    height: 100%;
+    transition: transform 0.2s ease;
+    position: absolute;
+}
+
+#waterdrip1 svg { transform: rotate(45deg); }
+#waterdrip2 svg { transform: rotate(127deg); }
+#haunted_wind svg { transform: rotate(89deg); }
+#mountain svg { transform: rotate(203deg); }
+#birds svg { transform: rotate(312deg); }
+#crow svg { transform: rotate(67deg); }
+#clock svg { transform: rotate(156deg); }
+#footsteps svg { transform: rotate(234deg); }
+#bell svg { transform: rotate(78deg); }
+#rain svg { transform: rotate(189deg); }
+#lightning svg { transform: rotate(341deg); }
+#laugh svg { transform: rotate(23deg); }
+#whispers svg { transform: rotate(278deg); }
+#piano svg { transform: rotate(134deg); }
+#hospital svg { transform: rotate(67deg); }
+#campfire svg { transform: rotate(298deg); }
+#knife svg { transform: rotate(145deg); }
+#axe svg { transform: rotate(267deg); }
+#waves svg { transform: rotate(89deg); }
+#typewriter svg { transform: rotate(178deg); }
+
+.cd:hover svg {
+    transform: scale(1.05);
 }
 input[type="range"] { 
     width: 100px; 
