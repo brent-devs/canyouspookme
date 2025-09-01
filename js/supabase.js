@@ -1,3 +1,5 @@
+import { UpdateObjectiveUI } from './ObjectiveUI.js';
+
 const SUPABASE_URL = 'https://hmajfzgdrlpycnncfrmg.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtYWpmemdkcmxweWNubmNmcm1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY2MDY2NjMsImV4cCI6MjA3MjE4MjY2M30.uvEANRFCC_M3uydwjc8zjZMHjK5m08o6FyXCn7p7zRA';
 
@@ -15,11 +17,12 @@ function generateUserId() {
 async function recordGhostSpook(ghostId) {
     try {
         const userId = generateUserId();
+        const ghostIdInt = Number(ghostId);
 
         const { error: insertError } = await supabaseClient
             .from('spooks')
             .insert({
-                ghost_id: ghostId,
+                ghost_id: ghostIdInt,
                 user_id: userId
             });
 
@@ -27,21 +30,39 @@ async function recordGhostSpook(ghostId) {
             console.error('Error inserting spook event:', insertError);
         }
 
-        const { data, error: rpcError } = await supabaseClient
+        const { error: rpcError } = await supabaseClient
             .rpc('increment_spook_summary', {
-                ghost_id_input: ghostId,
+                ghost_id_input: ghostIdInt,
                 user_id_input: userId
             });
 
         if (rpcError) {
             console.error('Error updating spook summary:', rpcError);
-            return false;
+            return null;
         }
+
+        const { data: summaryData, error: summaryError } = await supabaseClient
+            .from('spook_counts')
+            .select('*')
+            .eq('ghost_id', ghostIdInt)
+            .maybeSingle();
+
+        if (!summaryError && summaryData) {
+            const totalSpooks = summaryData.total_spooks;
+            const uniqueUsers = summaryData.unique_users;
+            UpdateObjectiveUI(`This ghost has been spooked ${totalSpooks} times by ${uniqueUsers} people`);
+        }
+
+        if (summaryError) {
+            console.error('Error fetching spook summary:', summaryError);
+            return null;
+        }
+        console.log(summaryData);
         return true;
 
     } catch (error) {
         console.error('Network/connection error recording ghost spook:', error);
-        return false;
+        return null;
     }
 }
 

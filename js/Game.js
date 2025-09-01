@@ -1,7 +1,8 @@
 import { Ghost } from './Ghost.js';
-import { getAllPhobias, getRandomPhobiaByDifficulty, shuffleArray } from './Phobias.js';
+import { getAllPhobias, shuffleArray } from './Phobias.js';
 import { getRandomGhostNames } from './GhostNames.js';
 import { recordGhostSpook } from './supabase.js';
+import { UpdateObjectiveUI } from './ObjectiveUI.js';
 
 export class Game {
     constructor() {
@@ -92,10 +93,7 @@ export class Game {
     }
 
     updateFreestyleObjective() {
-        const objectiveElement = document.getElementById('objective');
-        if (objectiveElement) {
-            objectiveElement.textContent = 'make eerie ambient noise';
-        }
+        UpdateObjectiveUI('make eerie ambient noise');
     }
 
     updateModeButtons() {
@@ -131,10 +129,7 @@ export class Game {
     async ghostSpooked(ghost) {
         ghost.wasSpooked = true;
         
-        const objectiveElement = document.getElementById('objective');
-        if (objectiveElement) {
-            objectiveElement.textContent = `${ghost.name} was spooked!`;
-        }
+        UpdateObjectiveUI(`${ghost.name} was spooked!`);
 
         console.log(`${ghost.name} was spooked!`);
 
@@ -146,7 +141,7 @@ export class Game {
 
         setTimeout(() => {
             this.nextGhost();
-        }, 1500);
+        }, 3000);
     }
 
     nextGhost() {
@@ -161,10 +156,7 @@ export class Game {
     }
 
     gameComplete() {
-        const objectiveElement = document.getElementById('objective');
-        if (objectiveElement) {
-            objectiveElement.textContent = 'You spooked everyone! 🎉';
-        }
+        UpdateObjectiveUI('🎉🎉 You spooked every ghost 🎉🎉');
         console.log('All ghosts have been spooked! Game complete!');
     }
 
@@ -180,11 +172,10 @@ export class Game {
         const currentGhost = this.ghosts[this.currentGhostIndex];
         if (!currentGhost) return;
 
-        const objectiveElement = document.getElementById('objective');
-        if (objectiveElement) {
-            objectiveElement.innerHTML = `This is ${currentGhost.name}. They have <b>${currentGhost.getPhobiaName().toLowerCase()}</b>`;
-        }
+        UpdateObjectiveUI(`This is ${currentGhost.name}. They have <b>${currentGhost.getPhobiaName().toLowerCase()}</b>`, { html: true });
     }
+
+    
 
     getCurrentGhost() {
         return this.ghosts[this.currentGhostIndex];
