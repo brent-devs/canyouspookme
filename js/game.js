@@ -1,6 +1,6 @@
 import { Ghost } from './ghost.js';
 import { getAllPhobias, shuffleArray } from './phobias.js';
-import { getRandomGhostNames } from './ghostNames.js';
+
 import { recordGhostSpook } from './supabase.js';
 import { UpdateObjectiveUI } from './objectiveUI.js';
 
@@ -29,10 +29,9 @@ export class Game {
         }
 
         const ghostOrder = this.generateGhostOrder();
-        const ghostNames = getRandomGhostNames(ghostOrder.length);
         
-        ghostOrder.forEach((phobia, index) => {
-            const ghost = new Ghost(ghostNames[index], phobia.name, animatedGhost);
+        ghostOrder.forEach((phobia) => {
+            const ghost = new Ghost(phobia.ghostName, phobia.name, animatedGhost);
             this.ghosts.push(ghost);
         });
     }

@@ -65,7 +65,6 @@ export function RandomizeOrLoadCDPositions() {
 
     const urlParams = new URLSearchParams(window.location.search);
     const shareData = urlParams.get('share');
-
     if (shareData && shareData.length >= cds.length * 3) {
         let index = 0;
         cds.forEach(cd => {
@@ -112,6 +111,11 @@ export function RandomizeOrLoadCDPositions() {
             SetCDPosition(cd, posX, posY);
         });
     }
+    
+    // Show all track containers after positioning
+    cds.forEach(cd => {
+        cd.classList.add('visible');
+    });
 }
 
 export function GetShareTag() {

@@ -207,6 +207,14 @@ input[type="range"]::-ms-thumb {
 
 .track-container {
     position: absolute;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3 ease, visibility 0.3s ease;
+}
+
+.track-container.visible {
+    opacity: 1;
+    visibility: visible;
 }
 
 #infoButton, #sharelink  {

@@ -1,5 +1,5 @@
 export class Phobia {
-    constructor(id, name, description, sounds, difficulty, fearThreshold = 40, fearIncrement = 33.4) {
+    constructor(id, name, description, sounds, difficulty, fearThreshold = 40, fearIncrement = 33.4, ghostName) {
         this.id = id,
         this.name = name;
         this.description = description;
@@ -7,6 +7,7 @@ export class Phobia {
         this.difficulty = difficulty;
         this.fearThreshold = fearThreshold;
         this.fearIncrement = fearIncrement;
+        this.ghostName = ghostName;
     }
 }
 
@@ -19,6 +20,7 @@ export const PHOBIAS = {
         'easy',
         25,
         33.4,
+        'Aqua'
     ),
     AICHMOPHOBIA: new Phobia(
         1,
@@ -27,7 +29,8 @@ export const PHOBIAS = {
         ['knife', 'axe'],
         'medium',
         25,
-        50
+        50,
+        'Axel'
     ),
     ANTHROPOPHOBIA: new Phobia(
         2,
@@ -36,7 +39,8 @@ export const PHOBIAS = {
         ['whispers', 'footsteps', 'laugh', 'hospital'],
         'medium',
         25,
-        33.4
+        33.4,
+        'Annie'
     ),
     ORNITHOPHOBIA: new Phobia(
         3,
@@ -46,6 +50,7 @@ export const PHOBIAS = {
         'medium',
         40,
         50,
+        'Oscar'
     ),
     BIOPHOBIA: new Phobia(
         4,
@@ -54,7 +59,8 @@ export const PHOBIAS = {
         ['mountain', 'haunted_wind'],
         'medium',
         25,
-        33.4
+        33.4,
+        'Bella'
     ),
     PHOTOPHOBIA: new Phobia(
         5,
@@ -63,7 +69,8 @@ export const PHOBIAS = {
         ['campfire', 'lightning'],
         'easy',
         25,
-        50
+        50,
+        'Phoebe'
     ),
     BRONTOPHOBIA: new Phobia(
          6, 
@@ -72,7 +79,8 @@ export const PHOBIAS = {
           ['lightning', 'waves'],
         'medium', 
         20, 
-        50 
+        50,
+        'Boris'
     ),
     PYROPHOBIA: new Phobia(
         7, 
@@ -81,16 +89,18 @@ export const PHOBIAS = {
          ['campfire'],
        'easy', 
        40, 
-       100 
+       100,
+       'Phoenix'
    ),
    NOSOCOPHOBIA: new Phobia(
         8,
         'Nosocomephobia',
         'Fear of hospitals or medical settings',
         ['hospital'],
-        'medium',
+        'hard',
         25,
-        100
+        100,
+        'Nora'
    ),
    CHRONOPHOBIA : new Phobia(
         9,
@@ -99,7 +109,8 @@ export const PHOBIAS = {
         ['clock'],
         'easy',
         25,
-        100
+        100,
+        'Charlie'
    ),
    KAMPANAPHOBIA: new Phobia(
         10,
@@ -108,7 +119,8 @@ export const PHOBIAS = {
         ['bell'],
         'medium',
         25,
-        100
+        100,
+        'Kai'
    ),
    MELOPHOBIA: new Phobia(
         11,
@@ -117,7 +129,8 @@ export const PHOBIAS = {
         ['bell', 'piano'],
         'medium',
         25,
-        50
+        50,
+        'Melody'
    ),
 };
 
