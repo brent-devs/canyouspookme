@@ -1,4 +1,4 @@
-import { getPhobiaByName } from './phobias.js';
+import { getPhobiaByName } from './phobias1.js';
 
 export class Ghost {
     constructor(name, phobiaName, element) {
