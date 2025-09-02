@@ -124,10 +124,9 @@ button:hover {
 .info-button {
     background: none;
     border: none;
-    font-size: var(--largest-font-size);
     cursor: pointer;
     padding: var(--spacing-two);
-    border-radius: 4px;
+    border-radius: var(--spacing-two);
     transition: all 0.3s ease;
     color: var(--foreground-colour);
 }

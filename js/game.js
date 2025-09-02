@@ -189,6 +189,7 @@ export class Game {
         currentGhost.updateFearScore(newFearScore);
         
         if (newFearScore >= 100 && !currentGhost.wasSpooked) {
+            console.log(`Ghost ${currentGhost.name} reached 100 fear score! Spooking...`);
             this.ghostSpooked(currentGhost);
         }
     }

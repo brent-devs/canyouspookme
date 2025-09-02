@@ -19,6 +19,9 @@ export function initializeCircularSliders() {
             const cdIcon = createCDIcon(soundId);
             container.appendChild(cdIcon);
             
+            const hiddenInput = createHiddenInput(soundId);
+            container.appendChild(hiddenInput);
+            
             function updateSliderValue(e) {
                 if (!isDragging) return;
                 
@@ -67,6 +70,7 @@ export function initializeCircularSliders() {
                 const normalizedValue = knobPosition;
                 
                 updateSoundLabel(soundId, normalizedValue);
+                updateHiddenInput(soundId, normalizedValue);
                 
                 const id = slider.getAttribute('data-id');
                 const event = new CustomEvent('circularSliderChange', {
@@ -161,6 +165,9 @@ export function setCircularSliderValue(soundId, value) {
     
     const dashOffset = totalPathLength - (normalizedValue * totalPathLength);
     knobPos.style.strokeDashoffset = dashOffset;
+    
+    updateHiddenInput(soundId, normalizedValue);
+    updateSoundLabel(soundId, normalizedValue);
 }
 
 export function getCircularSliderValue(soundId) {
@@ -282,4 +289,23 @@ function getIconColor(soundId) {
         'typewriter': '#32cd32'
     };
     return colorMap[soundId] || '#ffffff';
+}
+
+function createHiddenInput(soundId) {
+    const input = document.createElement('input');
+    input.type = 'hidden';
+    input.setAttribute('data-id', soundId);
+    input.value = '0';
+    console.log(`Created hidden input for ${soundId} with value 0`);
+    return input;
+}
+
+function updateHiddenInput(soundId, value) {
+    const input = document.querySelector(`input[data-id="${soundId}"]`);
+    if (input) {
+        input.value = value;
+        console.log(`Updated hidden input for ${soundId} to value ${value}`);
+    } else {
+        console.log(`No hidden input found for ${soundId}`);
+    }
 }
