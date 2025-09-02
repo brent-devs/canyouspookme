@@ -1,6 +1,6 @@
 import { DragHandling } from './dragHandling.js';
 import { SoundHandling } from './soundHandling.js';
-import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent } from './cd.js';
+import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent } from './c.js';
 import { Game } from './game.js';
 import { Modal } from './modal.js';
 import { testSupabaseConnection } from './supabase.js';
@@ -19,18 +19,14 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // iOS audio initialization - multiple interaction types
     const enableAudioOnInteraction = (event) => {
-        // Prevent default to ensure we get the interaction
         event.preventDefault();
         enableAudio();
         
-        // Test audio after a short delay
         setTimeout(() => {
             playTestTone();
         }, 500);
         
-        // Remove all listeners after successful interaction
         document.removeEventListener('touchstart', enableAudioOnInteraction);
         document.removeEventListener('mousedown', enableAudioOnInteraction);
         document.removeEventListener('click', enableAudioOnInteraction);
