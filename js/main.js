@@ -1,8 +1,8 @@
-import { DragHandling } from './DragHandling.js';
-import { SoundHandling } from './SoundHandling.js';
+import { DragHandling } from './dragHandling.js';
+import { SoundHandling } from './soundHandling.js';
 import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent } from './cd.js';
-import { Game } from './Game.js';
-import { Modal } from './Modal.js';
+import { Game } from './game.js';
+import { Modal } from './modal.js';
 import { testSupabaseConnection } from './supabase.js';
 
 document.addEventListener('DOMContentLoaded', () => {
