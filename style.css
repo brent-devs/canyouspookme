@@ -14,6 +14,8 @@
     --large-font-size: 2.5em;
     --largest-font-size: 3em;
     --twitter-colour: #1DA1F2;
+    --cd-size: 74px;
+    --volume-size: 98px;
 }
 
 html {
@@ -141,9 +143,9 @@ h2 {
 }
 
 .cd {
-    width: 74px;
-    height: 74px;
-    display: 32px;
+    width: var(--cd-size);
+    height: var(--cd-size);
+    display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
@@ -152,97 +154,67 @@ h2 {
 }
 
 .cd svg {
-    width: 100%;
-    height: 100%;
+    width: var(--cd-size) !important;
+    height: var(--cd-size) !important;
     transition: transform 0.2s ease;
     position: absolute;
+    opacity: 0;
 }
 
-#waterdrip1 svg { transform: rotate(45deg); }
-#waterdrip2 svg { transform: rotate(127deg); }
-#haunted_wind svg { transform: rotate(89deg); }
-#mountain svg { transform: rotate(203deg); }
-#birds svg { transform: rotate(312deg); }
-#crow svg { transform: rotate(67deg); }
-#clock svg { transform: rotate(156deg); }
-#footsteps svg { transform: rotate(234deg); }
-#bell svg { transform: rotate(78deg); }
-#rain svg { transform: rotate(189deg); }
-#lightning svg { transform: rotate(341deg); }
-#laugh svg { transform: rotate(23deg); }
-#whispers svg { transform: rotate(278deg); }
-#piano svg { transform: rotate(134deg); }
-#hospital svg { transform: rotate(67deg); }
-#campfire svg { transform: rotate(298deg); }
-#knife svg { transform: rotate(145deg); }
-#axe svg { transform: rotate(267deg); }
-#waves svg { transform: rotate(89deg); }
-#typewriter svg { transform: rotate(178deg); }
+.cd-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 18px;
+    height: 18px;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    line-height: 1;
+}
+
+
 
 .cd:hover svg {
     transform: scale(1.05);
 }
-input[type="range"] { 
-    width: 100px; 
-    color: var(--action-colour);
-    background: var(--action-colour-light);
-    height: 4px;
-    border-radius: 2px;
-    -webkit-appearance: none;
-    appearance: none;
-    outline: none;
+
+
+.circleSlider {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: var(--volume-size);
+    height:var(--volume-size);
+    z-index: 1;
+    pointer-events: none;
+    transform-origin: center;
 }
 
-input[type="range"]::-webkit-slider-track {
-    background: var(--action-colour-light);
-    height: 4px;
-    border-radius: 2px;
+.sliderPath, .sliderKnobPos { 
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 20;
+    stroke: var(--foreground-colour); 
 }
 
-input[type="range"]::-webkit-slider-thumb {
-    -webkit-appearance: none;
-    appearance: none;
-    background: var(--action-colour);
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+.sliderPath, .sliderKnobPos { fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:20;stroke:#ffffff; }
+
+.sliderKnobPos { stroke:var(--action-colour-light); stroke-dasharray: 888.4247436523438; stroke-dashoffset: 888.4247436523438; }
+.circleSlider circle { 
+    fill: var(--action-colour); 
+    touch-action: none; 
+    pointer-events: auto;
 }
 
-input[type="range"]::-moz-range-track {
-    background: var(--action-colour-light);
-    height: 4px;
-    border-radius: 2px;
-    border: none;
-}
-
-input[type="range"]::-moz-range-thumb {
-    background: var(--action-colour);
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-input[type="range"]::-ms-track {
-    background: var(--action-colour-light);
-    height: 4px;
-    border-radius: 2px;
-    border: none;
-}
-
-input[type="range"]::-ms-thumb {
-    background: var(--action-colour);
-    height: 16px;
-    width: 16px;
-    border-radius: 50%;
-    cursor: pointer;
-    border: none;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
+.circleSlider circle:hover { 
+    cursor: move; 
 }
 
 .track-container {
@@ -250,6 +222,31 @@ input[type="range"]::-ms-thumb {
     opacity: 0;
     visibility: hidden;
     transition: opacity 0.3 ease, visibility 0.3s ease;
+}
+
+.sound-label {
+    position: absolute;
+    bottom: calc(var(--cd-size) * -0.5);
+    left: 50%;
+    transform: translateX(-50%);
+    color: var(--foreground-colour);
+    font-size: 0.8em;
+    pointer-events: none;
+    text-align: center;
+}
+
+.volume-value {
+    font-size: 0.9em;
+    font-weight: normal;
+    margin-bottom: 0;
+    padding: 0;
+    line-height: 0.4;
+}
+
+.sound-name {
+    font-size: 1.1em;
+    font-weight: bold;
+    padding: 0;
 }
 
 .track-container.visible {

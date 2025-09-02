@@ -91,7 +91,7 @@ const sounds = {
       const initialFromSlider = slider ? parseFloat(slider.value) : undefined;
       const initialGain = (typeof pendingGains[id] !== 'undefined') 
         ? pendingGains[id] 
-        : (typeof initialFromSlider === 'number' ? initialFromSlider : 0.8);
+        : (typeof initialFromSlider === 'number' ? initialFromSlider : 0);
       gainNode.gain.value = initialGain;
 
       source.connect(panner);
@@ -142,19 +142,18 @@ const sounds = {
     try { panner.setPosition(x, y, -0.5); } catch(e) {}
   }
 
-  const sliders = document.querySelectorAll('input[type="range"]');
-  sliders.forEach(slider => {
-    slider.addEventListener('input', (e) => {
-      enableAudio();
-      const id = e.target.dataset.id;
-      const v = parseFloat(e.target.value);
-      if (gains[id]) {
-        gains[id].gain.value = v;
+  document.addEventListener('circularSliderChange', (e) => {
+    enableAudio();
+    const { id, value } = e.detail;
+    if (gains[id]) {
+      if (value <= 0.01) {
+        gains[id].gain.value = 0;
       } else {
-        pendingGains[id] = v;
+        gains[id].gain.value = value;
       }
-    });
-    slider.addEventListener('change', enableAudio);
+    } else {
+      pendingGains[id] = value;
+    }
   });
 
   function initializePanners() {

@@ -4,9 +4,11 @@ import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent }
 import { Game } from './game.js';
 import { Modal } from './modal.js';
 import { testSupabaseConnection } from './supabase.js';
+import { initializeCircularSliders } from './circularSlider.js';
 
 document.addEventListener('DOMContentLoaded', () => {
     RandomizeOrLoadCDPositions();
+    initializeCircularSliders();
     const { enableAudio, updatePanner, playTestTone } = SoundHandling();
     DragHandling(updatePanner, enableAudio);
     

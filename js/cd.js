@@ -1,4 +1,5 @@
 import { BOUNDARY_X, BOUNDARY_Y, VIEWPORT_WIDTH, VIEWPORT_HEIGHT } from './constants.js';
+import { setCircularSliderValue, getCircularSliderValue } from './circularSlider.js';
 
 const BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 
@@ -74,10 +75,9 @@ export function RandomizeOrLoadCDPositions() {
             const { posX, posY } = calculatePosition(xPercent, yPercent, vw, vh, cd.offsetWidth, cd.offsetHeight, boundaryX, boundaryY);
             SetCDPosition(cd, posX, posY);
             
-            const slider = cd.querySelector('input[type="range"]');
-            if (slider) {
-                slider.value = volume;
-                slider.dispatchEvent(new Event('input'));
+            const soundId = cd.getAttribute('data-sound-id');
+            if (soundId) {
+                setCircularSliderValue(soundId, volume);
             }
             
             index += 3;
@@ -127,10 +127,10 @@ export function GetShareTag() {
 
     return cds.map(cd => {
         const xPercent = Math.round(((parseFloat(cd.style.left) - boundaryX) / (vw - cd.offsetWidth - boundaryX * 2)) * 63);
-        const yPercent = Math.round(((parseFloat(cd.style.top) - boundaryY) / (vh - cd.offsetHeight - boundaryY * 2)) * 63);
+        const yPercent = Math.round(((parseFloat(cd.style.left) - boundaryY) / (vh - cd.offsetHeight - boundaryY * 2)) * 63);
         
-        const slider = cd.querySelector('input[type="range"]');
-        const volume = slider ? parseFloat(slider.value) : 0;
+        const soundId = cd.getAttribute('data-sound-id');
+        const volume = soundId ? getCircularSliderValue(soundId) : 0;
         
         return encodeCompressed(xPercent, yPercent, volume);
     }).join('');

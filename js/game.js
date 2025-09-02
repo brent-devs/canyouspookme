@@ -51,13 +51,10 @@ export class Game {
     }
 
     setupSliderObserver() {
-        const sliders = document.querySelectorAll('input[type="range"]');
-        sliders.forEach(slider => {
-            slider.addEventListener('input', () => {
-                if (this.isSpookMode) {
-                    this.updateCurrentGhost();
-                }
-            });
+        document.addEventListener('circularSliderChange', () => {
+            if (this.isSpookMode) {
+                this.updateCurrentGhost();
+            }
         });
     }
 
@@ -136,22 +133,17 @@ export class Game {
         
         if (tweetButton) {
             if (this.isSpookMode) {
-                // In spook mode, tweet button visibility is managed by spook-specific methods
-                // (initially hidden, shown after ghost is spooked)
                 tweetButton.style.display = 'none';
             } else {
-                // In freestyle mode, tweet button is always visible
                 tweetButton.style.display = 'inline-block';
             }
         }
         
         if (nextGhostButton) {
-            // Next ghost button is only visible in spook mode after ghost is spooked
             nextGhostButton.style.display = 'none';
         }
         
         if (shareContainer) {
-            // Share container animation is only for spook mode
             shareContainer.classList.remove('visible');
         }
     }
