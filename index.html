@@ -19,10 +19,10 @@
 	</head>
     <body>
         <h1>can you spook me?</h1>
-            <div class="mode-buttons">
-        <button id="spookMode" class="mode-button active">Spook Mode</button>
-        <button id="freestyleMode" class="mode-button">Freestyle Mode</button>
-    </div>
+        <div class="mode-buttons">
+            <button id="spookMode" class="mode-button active">Spook Mode</button>
+            <button id="freestyleMode" class="mode-button">Freestyle Mode</button>
+        </div>
         <p id="objective">can you spook me?</p>
 
         <div id="animated-ghost" class="ghost">
@@ -59,7 +59,6 @@
 
     <div id="infoModal" class="modal">
         <div class="modal-content">
-
             <div class="modal-tabs">
                 <button class="tab-button active" data-tab="how-to">Controls</button>
                 <button class="tab-button" data-tab="credits">Credits</button>
@@ -67,17 +66,17 @@
             </div>
             <div class="modal-body">
                 <div id="how-to" class="tab-content active">
+                    <p>Scare ghosts by playing matching their phobias.</p>
                     <p>Increase or decrease a slider to control a cd's volume.</p>
                     <p>Click and drag cd's to move them around.</p>
                     <p>Click the mode buttons to spook ghosts or simply make ambient sounds.</p>
                 </div>
                 <div id="credits" class="tab-content">
-                    <p>sound effect sources listed <a href="https://github.com/ZackWhelm/canyouspookme#sound-log" target="_blank">here</a></p>
-                    <p>inspired by <a href="https://neal.fun/ambient-chaos/" target="_blank">Ambient Chaos</a></p>
-                    <p>made with plain old <a href="https://github.com/ZackWhelm/canyouspookme" target="_blank">js/css/html</a></p>
+                    <p>sound effect sources listed <a href="https://github.com/ZackWhelm/canyouspookme#sound-log" target="_blank">here</a>.</p>
+                    <p>inspired by <a href="https://neal.fun/ambient-chaos/" target="_blank">Ambient Chaos</a>.</p>
                 </div>
                 <div id="about" class="tab-content">
-                    <p>This is still under construction. Better graphics and more ghosts coming soon.</p>
+                    <p>coded with <a href="https://github.com/ZackWhelm/canyouspookme" target="_blank">js/css/html</a> and a <a href="https://supabase.com/" target="_blank">supabase</a> backend.</p>
                     <p>Made by Zack Whelm. Check out my <a href="https://zackwhelm.dev/" target="_blank">website</a>.</p>
                     <p>Found a bug? Tweet at me <a href="https://x.com/WhelmGameDev" target="_blank">@WhelmGameDev</a>.</p>
                 </div>
@@ -725,9 +724,18 @@
             </div>
             <input type="range" min="0" max="1" step="0.01" value="0" data-id="typewriter">
         </div>
-        <span id="sharelink">
-            share your ambience <i class="ph ph-link-simple"></i>
-        </span>
+
+        <div id="shareContainer">
+            <button id="nextGhost">
+                Next Ghost
+            </button>
+            <button id="tweet">
+                Tweet
+            </button>
+            <button id="copy">
+                Copy Share Link
+            </button>
+        </div>
         <span id="infoButton">
             <i class="ph ph-info"></i>
         </span>

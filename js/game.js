@@ -19,6 +19,7 @@ export class Game {
         this.setupModeButtons();
         this.updateCurrentGhost();
         this.updateGhostDescription();
+        this.updateButtonVisibility();
     }
 
     createGhosts() {
@@ -80,6 +81,7 @@ export class Game {
         this.updateModeButtons();
         this.updateCurrentGhost();
         this.updateGhostDescription();
+        this.updateButtonVisibility();
         console.log('Switched to Spook Mode');
     }
 
@@ -88,6 +90,7 @@ export class Game {
         this.updateModeButtons();
         this.resetAllGhosts();
         this.updateFreestyleObjective();
+        this.updateButtonVisibility();
         console.log('Switched to Freestyle Mode');
     }
 
@@ -102,6 +105,79 @@ export class Game {
         if (spookButton && freestyleButton) {
             spookButton.classList.toggle('active', this.isSpookMode);
             freestyleButton.classList.toggle('active', !this.isSpookMode);
+        }
+        
+        this.updateButtonVisibility();
+    }
+    
+    updateCopyButtonVisibility() {
+        const copyButton = document.getElementById('copy');
+        const tweetButton = document.getElementById('tweet');
+        
+        if (copyButton) {
+            copyButton.style.display = this.isSpookMode ? 'none' : 'inline-block';
+        }
+        
+        if (tweetButton && this.isSpookMode) {
+        } else if (tweetButton && !this.isSpookMode) {
+            tweetButton.style.display = 'inline-block';
+        }
+    }
+    
+    updateButtonVisibility() {
+        const copyButton = document.getElementById('copy');
+        const tweetButton = document.getElementById('tweet');
+        const nextGhostButton = document.getElementById('nextGhost');
+        const shareContainer = document.getElementById('shareContainer');
+        
+        if (copyButton) {
+            copyButton.style.display = this.isSpookMode ? 'none' : 'inline-block';
+        }
+        
+        if (tweetButton) {
+            if (this.isSpookMode) {
+                // In spook mode, tweet button visibility is managed by spook-specific methods
+                // (initially hidden, shown after ghost is spooked)
+                tweetButton.style.display = 'none';
+            } else {
+                // In freestyle mode, tweet button is always visible
+                tweetButton.style.display = 'inline-block';
+            }
+        }
+        
+        if (nextGhostButton) {
+            // Next ghost button is only visible in spook mode after ghost is spooked
+            nextGhostButton.style.display = 'none';
+        }
+        
+        if (shareContainer) {
+            // Share container animation is only for spook mode
+            shareContainer.classList.remove('visible');
+        }
+    }
+    
+    showGhostSpookedButtons() {
+        const nextGhostButton = document.getElementById('nextGhost');
+        const tweetButton = document.getElementById('tweet');
+        const shareContainer = document.getElementById('shareContainer');
+        
+        if (nextGhostButton && tweetButton && shareContainer) {
+            nextGhostButton.style.display = 'inline-block';
+            tweetButton.style.display = 'inline-block';
+            
+            shareContainer.classList.add('visible');
+        }
+    }
+    
+    hideGhostSpookedButtons() {
+        const nextGhostButton = document.getElementById('nextGhost');
+        const tweetButton = document.getElementById('tweet');
+        const shareContainer = document.getElementById('shareContainer');
+        
+        if (nextGhostButton && tweetButton && shareContainer) {
+            nextGhostButton.style.display = 'none';
+            tweetButton.style.display = 'none';
+            shareContainer.classList.remove('visible');
         }
     }
 
@@ -138,9 +214,7 @@ export class Game {
             console.error('Failed to record spook:', error);
         }
 
-        setTimeout(() => {
-            this.nextGhost();
-        }, 3000);
+        this.showGhostSpookedButtons();
     }
 
     nextGhost() {
@@ -148,6 +222,7 @@ export class Game {
             this.currentGhostIndex++;
             this.updateCurrentGhost();
             this.updateGhostDescription();
+            this.updateButtonVisibility();
             console.log(`Switched to ${this.ghosts[this.currentGhostIndex].name}`);
         } else {
             this.gameComplete();

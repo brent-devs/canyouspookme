@@ -27,13 +27,17 @@ export class Modal {
     }
     
     openModal() {
-        this.modal.classList.add('show');
+        requestAnimationFrame(() => {
+            this.modal.classList.add('show');
+        });
         document.body.style.overflow = 'hidden';
     }
     
     closeModal() {
         this.modal.classList.remove('show');
-        document.body.style.overflow = '';
+        setTimeout(() => {
+            document.body.style.overflow = '';
+        }, 400);
     }
     
     switchTab(tabName) {

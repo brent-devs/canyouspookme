@@ -8,10 +8,12 @@
     --spacing-three: 12px;
     --spacing-four: 16px;
     --spacing-five: 16px;
-    --small-font-size: 18px;
-    --font-size: 24px;
-    --large-font-size: 30px;
-    --largest-font-size: 36px;
+    --tiny-font-size: 1em;
+    --small-font-size: 1.4em;
+    --font-size: 2em;
+    --large-font-size: 2.5em;
+    --largest-font-size: 3em;
+    --twitter-colour: #1DA1F2;
 }
 
 html {
@@ -30,9 +32,6 @@ body {
     padding: var(--spacing-five);
 }
 
-
-
-
 p {
     margin: var(--spacing-one);
 }
@@ -45,20 +44,50 @@ h1, h2 {
 h1 {
     font-family: "Creepster", system-ui;
     font-weight: 500;
+    font-size: var(--largest-font-size);
     user-select: none;
 }
 
 .mode-buttons {
     display: flex;
-    gap: 10px;
+    gap: var(--spacing-five);
     margin: 10px 0;
     justify-content: center;
 }
 
-.mode-button {
-    padding: var(--spacing-two) var(--spacing-two);
+#shareContainer {
+    display: flex;
+    gap: var(--spacing-three);    
+    position: fixed;
+    bottom:  var(--spacing-five);
+    margin: 10px 0;
+    justify-content: center;
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+#shareContainer.visible {
+    transform: translateY(0);
+}
+
+#shareContainer button {
+    font-size: 0.8em;
+    font-weight: 600;
+}
+
+#tweet {
+    background: var(--twitter-colour);
+    border-color: var(--twitter-colour);
+}
+
+#copy {
+    background-color: var(--action-colour);
+    border-color: var(--action-colour);
+}
+
+button {
+    padding: var(--spacing-two) var(--spacing-four);
     font-family: "Gaegu", sans-serif;
-    font-size: var(--small-font-size);
+    font-size: var(--tiny-font-size);
     background: transparent;
     color: var(--foreground-colour);
     border: 2px solid var(--foreground-colour);
@@ -66,6 +95,11 @@ h1 {
     cursor: pointer;
     transition: all 0.3s ease;
     user-select: none;
+    transform: scale(1);
+}
+
+button:hover {
+    transform: scale(1.07);
 }
 
 .mode-button:hover {
@@ -77,6 +111,12 @@ h1 {
     background: var(--action-colour);
     color: var(--background-colour);
     border-color: var(--action-colour);
+}
+
+
+.mode-button.active:hover {
+    transform: scale(1);
+    cursor: default;
 }
 
 .info-button {
@@ -217,7 +257,7 @@ input[type="range"]::-ms-thumb {
     visibility: visible;
 }
 
-#infoButton, #sharelink  {
+#infoButton  {
     position: fixed;
     bottom:  var(--spacing-five);
     z-index: 2;
@@ -245,34 +285,39 @@ input[type="range"]::-ms-thumb {
 }
 
 .modal {
-    display: none;
     position: fixed;
     z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.7);
-    backdrop-filter: blur(5px);
-    transition: opacity 0.75s ease;
-}
-
-.modal.show {
+    background-color: rgba(0, 0, 0, 0);
+    backdrop-filter: blur(0px);
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    opacity: 0;
+    visibility: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
+}
+
+.modal.show {
+    background-color: rgba(0, 0, 0, 0.7);
+    backdrop-filter: blur(5px);
+    opacity: 1;
+    visibility: visible;
 }
 
 .modal-content {
     background-color: var(--background-colour);
     border: 2px solid var(--foreground-colour);
     border-radius: var(--spacing-three);
-    width: 90%;
-    max-width: 600px;
+    width: 100%;
+    max-width: 720px;
     max-height: 80vh;
     overflow: hidden;
-    transform: scale(0.8);
-    transition: transform 1.0s ease;
+    transform: scale(0.3);
+    transition: transform 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.3);
 }
 
 .modal.show .modal-content {
@@ -294,9 +339,10 @@ input[type="range"]::-ms-thumb {
     color: var(--foreground-colour);
     padding: var(--spacing-three);
     cursor: pointer;
-    font-size: 1em;
+    font-size: var(--small-font-size);
     transition: all 0.3s ease;
     border-bottom: 3px solid transparent;
+    font-family: "Gaegu", sans-serif;
 }
 
 .tab-button:hover {
