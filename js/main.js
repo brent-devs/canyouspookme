@@ -1,6 +1,6 @@
 import { DragHandling } from './DragHandling.js';
 import { SoundHandling } from './SoundHandling.js';
-import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent } from './CD.js';
+import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent } from './cd.js';
 import { Game } from './Game.js';
 import { Modal } from './Modal.js';
 import { testSupabaseConnection } from './supabase.js';

@@ -1,8 +1,8 @@
-import { Ghost } from './Ghost.js';
-import { getAllPhobias, shuffleArray } from './Phobias.js';
-import { getRandomGhostNames } from './GhostNames.js';
+import { Ghost } from './ghost.js';
+import { getAllPhobias, shuffleArray } from './phobias.js';
+import { getRandomGhostNames } from './ghostNames.js';
 import { recordGhostSpook } from './supabase.js';
-import { UpdateObjectiveUI } from './ObjectiveUI.js';
+import { UpdateObjectiveUI } from './objectiveUI.js';
 
 export class Game {
     constructor() {
