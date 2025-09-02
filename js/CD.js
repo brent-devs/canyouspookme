@@ -1,4 +1,4 @@
-import { BOUNDARY_X, BOUNDARY_Y, VIEWPORT_WIDTH, VIEWPORT_HEIGHT } from './constants1.js';
+import { BOUNDARY_X, BOUNDARY_Y, VIEWPORT_WIDTH, VIEWPORT_HEIGHT } from './constants.js';
 
 const BASE64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
 

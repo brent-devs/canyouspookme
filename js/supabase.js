@@ -1,4 +1,4 @@
-import { UpdateObjectiveUI } from './objectiveUI1.js';
+import { UpdateObjectiveUI } from './objectiveUI.js';
 
 const SUPABASE_URL = 'https://hmajfzgdrlpycnncfrmg.supabase.co';
 const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhtYWpmemdkcmxweWNubmNmcm1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTY2MDY2NjMsImV4cCI6MjA3MjE4MjY2M30.uvEANRFCC_M3uydwjc8zjZMHjK5m08o6FyXCn7p7zRA';
