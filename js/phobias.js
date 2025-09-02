@@ -64,7 +64,61 @@ export const PHOBIAS = {
         'easy',
         25,
         50
-    )
+    ),
+    BRONTOPHOBIA: new Phobia(
+         6, 
+         'Brontophobia', 
+         'Fear of thunder and storms',
+          ['lightning', 'waves'],
+        'medium', 
+        20, 
+        50 
+    ),
+    PYROPHOBIA: new Phobia(
+        7, 
+        'Pyrophobia', 
+        'Fear of fire or flames',
+         ['campfire'],
+       'easy', 
+       40, 
+       100 
+   ),
+   NOSOCOPHOBIA: new Phobia(
+        8,
+        'Nosocomephobia',
+        'Fear of hospitals or medical settings',
+        ['hospital'],
+        'medium',
+        25,
+        100
+   ),
+   CHRONOPHOBIA : new Phobia(
+        9,
+        'Chronophobia',   
+        'Fear of time',
+        ['clock'],
+        'easy',
+        25,
+        100
+   ),
+   KAMPANAPHOBIA: new Phobia(
+        10,
+        'Kampanaphobia',
+        'Fear of bells',
+        ['bell'],
+        'medium',
+        25,
+        100
+   ),
+   MELOPHOBIA: new Phobia(
+        11,
+        'Melophobia',
+        'Fear of music',
+        ['bell', 'piano'],
+        'medium',
+        25,
+        50
+   ),
 };
 
 export function getPhobiaByName(name) {
