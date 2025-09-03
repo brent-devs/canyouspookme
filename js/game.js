@@ -202,7 +202,8 @@ export class Game {
         console.log(`${ghost.name} was spooked!`);
 
         try {
-            await recordGhostSpook(ghost.phobia.id);
+            const ghostNameToPass = ghost.name;
+            await recordGhostSpook(ghost.phobia.id, ghostNameToPass);
         } catch (error) {
             console.error('Failed to record spook:', error);
         }

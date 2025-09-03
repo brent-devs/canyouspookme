@@ -14,7 +14,7 @@ function generateUserId() {
     return userId;
   }
 
-async function recordGhostSpook(ghostId) {
+async function recordGhostSpook(ghostId, ghostName) {
     try {
         const userId = generateUserId();
         const ghostIdInt = Number(ghostId);
@@ -50,7 +50,7 @@ async function recordGhostSpook(ghostId) {
         if (!summaryError && summaryData) {
             const totalSpooks = summaryData.total_spooks;
             const uniqueUsers = summaryData.unique_users;
-            UpdateObjectiveUI(`This ghost has been spooked ${totalSpooks} times by ${uniqueUsers} people`);
+            UpdateObjectiveUI(`${ghostName} has been spooked ${totalSpooks} times by ${uniqueUsers} people`);
         }
 
         if (summaryError) {
