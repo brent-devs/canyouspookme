@@ -3,6 +3,7 @@ import { SoundHandling } from './soundHandling.js';
 import { RandomizeOrLoadCDPositions, GetShareTag, UpdateCDPositionsFromPercent } from './cd.js';
 import { Game } from './game.js';
 import { Modal } from './modal.js';
+import { Onboarding } from './onboarding.js';
 import { testSupabaseConnection } from './supabase.js';
 import { initializeCircularSliders } from './circularSlider.js';
 
@@ -14,6 +15,10 @@ document.addEventListener('DOMContentLoaded', () => {
     
     const game = new Game();
     const modal = new Modal();
+    
+    if (Onboarding.shouldShowOnboarding()) {
+        const onboarding = new Onboarding();
+    }
     
     testSupabaseConnection().then(isConnected => {
         if (!isConnected) {

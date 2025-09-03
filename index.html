@@ -66,7 +66,6 @@
             </div>
             <div class="modal-body">
                 <div id="how-to" class="tab-content active">
-                    <p>Scare ghosts by playing matching their phobias.</p>
                     <p>Increase or decrease a slider to control a cd's volume.</p>
                     <p>Click and drag cd's to move them around.</p>
                     <p>Click the mode buttons to spook ghosts or simply make ambient sounds.</p>
@@ -74,15 +73,42 @@
                 <div id="credits" class="tab-content">
                     <p>sound effect sources listed <a href="https://github.com/ZackWhelm/canyouspookme#sound-log" target="_blank">here</a>.</p>
                     <p>inspired by <a href="https://neal.fun/ambient-chaos/" target="_blank">Ambient Chaos</a>.</p>
+                    <p>coded with <a href="https://github.com/ZackWhelm/canyouspookme" target="_blank">js/css/html</a> and a <a href="https://supabase.com/" target="_blank">supabase</a> backend.</p>
                 </div>
                 <div id="about" class="tab-content">
-                    <p>coded with <a href="https://github.com/ZackWhelm/canyouspookme" target="_blank">js/css/html</a> and a <a href="https://supabase.com/" target="_blank">supabase</a> backend.</p>
+                    <p>a tiny game about spooking ghosts</p>
                     <p>Made by Zack Whelm. Check out my <a href="https://zackwhelm.dev/" target="_blank">website</a>.</p>
                     <p>Found a bug? Tweet at me <a href="https://x.com/WhelmGameDev" target="_blank">@WhelmGameDev</a>.</p>
                 </div>
             </div>
         </div>
     </div>
+    
+    <div id="onboardingModal" class="modal onboarding-modal">
+        <div class="modal-content onboarding-content">
+            <div class="onboarding-step active" data-step="1">
+                <h2>Try to spook the ghost</h2>
+                <p>Play different sounds to scare the ghost based on the phobia is has</p>
+                <button class="onboarding-next">Next</button>
+            </div>
+            <div class="onboarding-step" data-step="2">
+                <h2>Move sounds around</h2>
+                <p>Drag CDs around the screen to change where the sound comes from</p>
+                <button class="onboarding-next">Next</button>
+            </div>
+            <div class="onboarding-step" data-step="3">
+                <h2>Ghosts have bad hearing</h2>
+                <p>The ghost can only hear the 5 loudest sounds playing</p>
+                <button class="onboarding-next">Next</button>
+            </div>
+            <div class="onboarding-step" data-step="4">
+                <h2>You're ready</h2>
+                <p>Go spook some ghosts!</p>
+                <button class="onboarding-start">Start Game</button>
+            </div>
+        </div>
+    </div>
+    
         <div class="track-container" data-sound-id="waterdrip1">
             <div class="cd" id="waterdrip1">
                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#f2f2f2" height="100%" width="100%" version="1.1" viewBox="0 0 512 512" xml:space="preserve">

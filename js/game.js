@@ -239,7 +239,7 @@ export class Game {
         const currentGhost = this.ghosts[this.currentGhostIndex];
         if (!currentGhost) return;
 
-        UpdateObjectiveUI(`This is ${currentGhost.name}. They have <b>${currentGhost.getPhobiaName().toLowerCase()}</b>`, { html: true });
+        UpdateObjectiveUI(`This is ${currentGhost.name}. They have <b>${currentGhost.getPhobiaName().toLowerCase()}</b>.`, { html: true });
     }
 
     

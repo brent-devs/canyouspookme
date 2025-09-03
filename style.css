@@ -257,7 +257,7 @@ h2 {
     position: fixed;
     bottom:  var(--spacing-five);
     z-index: 2;
-    font-size: var(--largest-font-size);
+    font-size: var(--font-size);
     display: inline-flex;
     align-items: center;
     gap: 0.3em;
@@ -339,6 +339,7 @@ h2 {
     transition: all 0.3s ease;
     border-bottom: 3px solid transparent;
     font-family: "Gaegu", sans-serif;
+    border-radius: 0;
 }
 
 .tab-button:hover {
@@ -375,6 +376,62 @@ h2 {
 
 .tab-content p {
     margin-bottom: var(--spacing-three);
+}
+
+.onboarding-modal {
+    z-index: 10000;
+}
+
+.onboarding-content {
+    max-width: 500px;
+    text-align: center;
+    padding: var(--spacing-five);
+}
+
+.onboarding-step {
+    display: none;
+}
+
+.onboarding-step.active {
+    display: block;
+}
+
+.onboarding-step h2 {
+    margin-bottom: var(--spacing-three);
+    color: #f2f2f2;
+}
+
+.onboarding-step p {
+    font-family: 'Gaegu', sans-serif;
+    margin-bottom: var(--spacing-three);
+    color: #ccc;
+    line-height: 1.5;
+}
+
+.onboarding-next,
+.onboarding-start {
+    background: #f2f2f2;
+    color: #1a1a1a;
+    border: none;
+    padding: 12px 24px;
+    font-family: 'Gaegu', sans-serif;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.onboarding-next:hover,
+.onboarding-start:hover {
+    background: #d4d4d4;
+}
+
+.onboarding-start {
+    background: var(--action-colour-light);
+    color: white;
+}
+
+.onboarding-start:hover {
+    background: var(--action-colour);
 }
 
 a {
