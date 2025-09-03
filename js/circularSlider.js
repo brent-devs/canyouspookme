@@ -116,7 +116,7 @@ function createCircularSlider(cdId, soundId) {
     
     const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
     svg.setAttribute('class', 'sliderHolder');
-    svg.setAttribute('viewBox', '0 0 433 380');
+    svg.setAttribute('viewBox', '0 -12 433 400');
     svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
     
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
@@ -130,7 +130,7 @@ function createCircularSlider(cdId, soundId) {
     const knob = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
     knob.setAttribute('cx', '83.2');
     knob.setAttribute('cy', '349.7');
-    knob.setAttribute('r', '28');
+    knob.setAttribute('r', '40');
     
     svg.appendChild(path);
     svg.appendChild(knobPos);

@@ -14,8 +14,8 @@
     --large-font-size: 2.5em;
     --largest-font-size: 3em;
     --twitter-colour: #1DA1F2;
-    --cd-size: 74px;
-    --volume-size: 98px;
+    --cd-size: 90px;
+    --volume-size: 120px;
 }
 
 html {
@@ -199,11 +199,10 @@ h2 {
     fill: none;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 20;
+    stroke-width: 40;
     stroke: var(--foreground-colour); 
 }
 
-.sliderPath, .sliderKnobPos { fill:none;stroke-linecap:round;stroke-linejoin:round;stroke-width:20;stroke:#ffffff; }
 
 .sliderKnobPos { stroke:var(--action-colour-light); stroke-dasharray: 888.4247436523438; stroke-dashoffset: 888.4247436523438; }
 .circleSlider circle { 
