@@ -296,7 +296,6 @@ function createHiddenInput(soundId) {
     input.type = 'hidden';
     input.setAttribute('data-id', soundId);
     input.value = '0';
-    console.log(`Created hidden input for ${soundId} with value 0`);
     return input;
 }
 
@@ -304,8 +303,5 @@ function updateHiddenInput(soundId, value) {
     const input = document.querySelector(`input[data-id="${soundId}"]`);
     if (input) {
         input.value = value;
-        console.log(`Updated hidden input for ${soundId} to value ${value}`);
-    } else {
-        console.log(`No hidden input found for ${soundId}`);
     }
 }

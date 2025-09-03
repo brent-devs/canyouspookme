@@ -17,15 +17,23 @@ export class Ghost {
         if (!this.phobia) return 0;
 
         let newFearScore = 0;
+        const volumes = [];
 
         this.phobia.sounds.forEach(soundId => {
             const slider = document.querySelector(`input[data-id="${soundId}"]`);
             if (slider) {
                 const volume = parseFloat(slider.value) * 100;
                 if (volume >= this.phobia.fearThreshold) {
-                    newFearScore += this.phobia.fearIncrement;
+                    volumes.push(volume);
                 }
             }
+        });
+
+        volumes.sort((a, b) => b - a);
+        const top5Volumes = volumes.slice(0, 5);
+        
+        top5Volumes.forEach(volume => {
+            newFearScore += this.phobia.fearIncrement;
         });
 
         return newFearScore;

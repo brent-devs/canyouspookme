@@ -43,8 +43,10 @@ export function DragHandling(updatePanner, enableAudio) {
 
         SetCDPosition(currentDrag, newX, newY);
 
-        const cd = currentDrag.querySelector('.cd');
-        if (cd) updatePanner(cd.id);
+        const soundId = currentDrag.getAttribute('data-sound-id');
+        if (soundId) {
+            updatePanner(soundId);
+        }
     };
 
     const handleDragEnd = () => {

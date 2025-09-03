@@ -123,10 +123,13 @@ const sounds = {
   }
 
   function updatePanner(id) {
-    const cd = document.getElementById(id);
+    const cd = document.querySelector(`[data-sound-id="${id}"]`);
     const panner = panners[id];
-    const ghost = document.getElementById('ghost');
-    if (!cd || !panner || !ghost) return;
+    const ghost = document.getElementById('animated-ghost');
+    if (!cd || !panner || !ghost) {
+      console.log(`updatePanner failed for ${id}:`, { cd: !!cd, panner: !!panner, ghost: !!ghost });
+      return;
+    }
 
     const ghostRect = ghost.getBoundingClientRect();
     const ghostX = ghostRect.left + ghostRect.width / 2;
@@ -139,7 +142,12 @@ const sounds = {
     const x = (cdX - ghostX) / 100;
     const y = (cdY - ghostY) / 100;
 
-    try { panner.setPosition(x, y, -0.5); } catch(e) {}
+
+    try { 
+      panner.setPosition(x, y, -0.5); 
+    } catch(e) {
+      console.error(`Failed to set panner position for ${id}:`, e);
+    }
   }
 
   document.addEventListener('circularSliderChange', (e) => {
