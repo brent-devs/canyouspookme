@@ -8,8 +8,8 @@ import { testSupabaseConnection } from './supabase.js';
 import { initializeCircularSliders } from './circularSlider.js';
 
 document.addEventListener('DOMContentLoaded', () => {
-    RandomizeOrLoadCDPositions();
     initializeCircularSliders();
+    RandomizeOrLoadCDPositions();
     const { enableAudio, updatePanner, playTestTone } = SoundHandling();
     DragHandling(updatePanner, enableAudio);
     
@@ -86,20 +86,7 @@ document.addEventListener('DOMContentLoaded', () => {
         overlay.addEventListener('click', startAudio);
     }
 
-    const shareButton = document.getElementById('sharelink');
-    if (shareButton) {
-        shareButton.addEventListener('click', () => {
-            const shareTag = GetShareTag();
-            const shareUrl = `${window.location.origin}${window.location.pathname}?share=${shareTag}`;
-            navigator.clipboard.writeText(shareUrl)
-            .then(() => {
-                console.log('Copied share link to clipboard!');
-            })
-            .catch(err => {
-                console.error('Failed to copy:', err);
-            });
-        });
-    }
+
 
     const tweetButton = document.getElementById('tweet');
     if (tweetButton) {

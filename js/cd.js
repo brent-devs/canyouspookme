@@ -12,17 +12,15 @@ function decodeBase64(char) {
 }
 
 function encodeCompressed(posX, posY, volume) {
-    const pos = posX * 64 + posY;
     const vol = Math.round(volume * 49);
-    return encodeBase64(Math.floor(pos / 64)) + encodeBase64(pos % 64) + encodeBase64(vol);
+    return encodeBase64(posX) + encodeBase64(posY) + encodeBase64(vol);
 }
 
 function decodeCompressed(str) {
-    const posX = decodeBase64(str[0]) * 64 + decodeBase64(str[1]);
-    const posY = posX % 64;
-    const xPercent = Math.floor(posX / 64);
+    const xPercent = decodeBase64(str[0]);
+    const yPercent = decodeBase64(str[1]);
     const volume = decodeBase64(str[2]) / 49;
-    return { posX: xPercent, posY, volume };
+    return { posX: xPercent, posY: yPercent, volume };
 }
 
 function calculatePosition(xPercent, yPercent, vw, vh, cdWidth, cdHeight, boundaryX, boundaryY) {
@@ -68,6 +66,8 @@ export function RandomizeOrLoadCDPositions() {
     const shareData = urlParams.get('share');
     if (shareData && shareData.length >= cds.length * 3) {
         let index = 0;
+        const shareDataToRestore = [];
+        
         cds.forEach(cd => {
             const part = shareData.slice(index, index + 3);
             const { posX: xPercent, posY: yPercent, volume } = decodeCompressed(part);
@@ -77,11 +77,27 @@ export function RandomizeOrLoadCDPositions() {
             
             const soundId = cd.getAttribute('data-sound-id');
             if (soundId) {
-                setCircularSliderValue(soundId, volume);
+                shareDataToRestore.push({ soundId, volume });
             }
             
             index += 3;
         });
+        
+        if (shareDataToRestore.length > 0) {
+            const restoreVolumes = () => {
+                shareDataToRestore.forEach(({ soundId, volume }) => {
+                    setCircularSliderValue(soundId, volume);
+                });
+            };
+            
+            if (document.readyState === 'complete') {
+                setTimeout(restoreVolumes, 100);
+            } else {
+                window.addEventListener('load', () => {
+                    setTimeout(restoreVolumes, 100);
+                });
+            }
+        }
     } else {
         const positions = [];
 
@@ -127,10 +143,12 @@ export function GetShareTag() {
 
     return cds.map(cd => {
         const xPercent = Math.round(((parseFloat(cd.style.left) - boundaryX) / (vw - cd.offsetWidth - boundaryX * 2)) * 63);
-        const yPercent = Math.round(((parseFloat(cd.style.left) - boundaryY) / (vh - cd.offsetHeight - boundaryY * 2)) * 63);
+        const yPercent = Math.round(((parseFloat(cd.style.top) - boundaryY) / (vh - cd.offsetHeight - boundaryY * 2)) * 63);
         
         const soundId = cd.getAttribute('data-sound-id');
         const volume = soundId ? getCircularSliderValue(soundId) : 0;
+        
+
         
         return encodeCompressed(xPercent, yPercent, volume);
     }).join('');

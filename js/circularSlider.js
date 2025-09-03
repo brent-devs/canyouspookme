@@ -150,10 +150,18 @@ export function setCircularSliderValue(soundId, value) {
     const knob = slider.querySelector('circle');
     const knobPos = slider.querySelector('.sliderKnobPos');
     
+    if (!knob || !knobPos) return;
+    
     const normalizedValue = Math.max(0, Math.min(1, value));
     
     const pathElement = slider.querySelector('.sliderKnobPos');
     const totalPathLength = pathElement.getTotalLength();
+    
+    if (totalPathLength === 0) {
+        setTimeout(() => setCircularSliderValue(soundId, value), 50);
+        return;
+    }
+    
     const distance = normalizedValue * totalPathLength;
     const point = pathElement.getPointAtLength(distance);
     
