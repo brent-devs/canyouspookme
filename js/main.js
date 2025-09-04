@@ -10,7 +10,7 @@ import { initializeCircularSliders } from './circularSlider.js';
 document.addEventListener('DOMContentLoaded', () => {
     initializeCircularSliders();
     RandomizeOrLoadCDPositions();
-    const { enableAudio, updatePanner, playTestTone } = SoundHandling();
+    const { enableAudio, updatePanner, playTestTone, primeAudio, initializeAudioForIOS } = SoundHandling();
     DragHandling(updatePanner, enableAudio);
     
     const game = new Game();
@@ -29,8 +29,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const enableAudioOnInteraction = (event) => {
         event.preventDefault();
         enableAudio();
+        initializeAudioForIOS();
         
         setTimeout(() => {
+            primeAudio();
             playTestTone();
         }, 500);
         
@@ -79,6 +81,7 @@ document.addEventListener('DOMContentLoaded', () => {
         
         const startAudio = () => {
             enableAudio();
+            initializeAudioForIOS();
             document.body.removeChild(overlay);
             document.removeEventListener('click', startAudio);
         };

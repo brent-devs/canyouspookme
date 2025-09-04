@@ -2,39 +2,42 @@ export function SoundHandling() {
   let audioContext = null;
   let audioStarted = false;
   let soundsLoaded = false;
+  let audioBuffers = {};
+  let isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
 
   function enableAudio() {    
     if (!audioContext) {
-      audioContext = new (window.AudioContext || window.webkitAudioContext)({
-        latencyHint: 'interactive',
-        sampleRate: 44100
-      });
+      try {
+        audioContext = new (window.AudioContext || window.webkitAudioContext)({
+          latencyHint: 'interactive',
+          sampleRate: isIOS ? 48000 : 44100
+        });
+      } catch (err) {
+        console.error('Failed to create AudioContext:', err);
+        return;
+      }
     }
     
     if (!audioStarted) {
-      audioContext.resume().then(() => {
-        if (audioContext.state === 'running') {
-          audioStarted = true;
-          if (!soundsLoaded) {
-            loadAllSounds();
-            soundsLoaded = true;
-          }
-        } else {
-          setTimeout(() => {
-            if (audioContext.state === 'suspended') {
-              audioContext.resume().then(() => {
-                audioStarted = true;
-                if (!soundsLoaded) {
-                  loadAllSounds();
-                  soundsLoaded = true;
-                }
-              });
+      if (audioContext.state === 'suspended') {
+        audioContext.resume().then(() => {
+          if (audioContext.state === 'running') {
+            audioStarted = true;
+            if (!soundsLoaded) {
+              loadAllSounds();
+              soundsLoaded = true;
             }
-          }, 100);
+          }
+        }).catch(err => {
+          console.error('Failed to resume audio context:', err);
+        });
+      } else if (audioContext.state === 'running') {
+        audioStarted = true;
+        if (!soundsLoaded) {
+          loadAllSounds();
+          soundsLoaded = true;
         }
-      }).catch(err => {
-        console.error('Failed to resume audio context:', err);
-      });
+      }
     }
   }
 
@@ -67,59 +70,91 @@ const sounds = {
   const pendingGains = {};
 
   async function loadSound(id, url) {
-    if (!audioContext) return;
+    if (!audioContext || audioContext.state !== 'running') return;
     
     try {
       const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
       const arrayBuffer = await response.arrayBuffer();
       const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-
-      const source = audioContext.createBufferSource();
-      source.buffer = audioBuffer;
-      source.loop = true;
-
-      const panner = audioContext.createPanner();
-      panner.panningModel = 'HRTF';
-      panner.distanceModel = 'linear';
-      try { panner.setPosition(0, 0, -1); } catch(e){}
-
-      panner.refDistance = 100;
-      panner.maxDistance = 2000;
-
-      const gainNode = audioContext.createGain();
+      
+      audioBuffers[id] = audioBuffer;
+      
       const slider = document.querySelector(`input[data-id="${id}"]`);
       const initialFromSlider = slider ? parseFloat(slider.value) : undefined;
       const initialGain = (typeof pendingGains[id] !== 'undefined') 
         ? pendingGains[id] 
         : (typeof initialFromSlider === 'number' ? initialFromSlider : 0);
-      gainNode.gain.value = initialGain;
-
-      source.connect(panner);
-      panner.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      setTimeout(() => {
-        try {
-          source.start();
-          sources[id] = source;
-          panners[id] = panner;
-          gains[id] = gainNode;
-          updatePanner(id);
-        } catch (err) {
-          console.error('Failed to start source for', id, err);
-        }
-      }, 50);
+      
+      if (initialGain > 0.01) {
+        startSound(id, initialGain);
+      }
 
     } catch (err) {
       console.error('Failed to load', id, err);
     }
   }
 
-  function loadAllSounds() {
-    for (const [id, file] of Object.entries(sounds)) {
-      loadSound(id, file);
+  function startSound(id, gainValue = 0) {
+    if (!audioContext || !audioBuffers[id] || audioContext.state !== 'running') return;
+    
+    try {
+      const source = audioContext.createBufferSource();
+      source.buffer = audioBuffers[id];
+      source.loop = true;
+
+      const panner = audioContext.createPanner();
+      panner.panningModel = 'HRTF';
+      panner.distanceModel = 'linear';
+      panner.refDistance = 100;
+      panner.maxDistance = 2000;
+      
+      try { 
+        panner.setPosition(0, 0, -1); 
+      } catch(e) {
+        console.warn('Failed to set initial panner position for', id);
+      }
+
+      const gainNode = audioContext.createGain();
+      gainNode.gain.value = gainValue;
+
+      source.connect(panner);
+      panner.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      source.start();
+      
+      sources[id] = source;
+      panners[id] = panner;
+      gains[id] = gainNode;
+      
+      updatePanner(id);
+      
+    } catch (err) {
+      console.error('Failed to start source for', id, err);
     }
-    setTimeout(initializePanners, 100);
+  }
+
+  function loadAllSounds() {
+    const loadPromises = Object.entries(sounds).map(([id, file]) => loadSound(id, file));
+    
+    Promise.allSettled(loadPromises).then(() => {
+      setTimeout(() => {
+        processPendingGains();
+        initializePanners();
+      }, 100);
+    });
+  }
+
+  function processPendingGains() {
+    Object.keys(pendingGains).forEach(id => {
+      if (audioBuffers[id] && pendingGains[id] > 0.01) {
+        startSound(id, pendingGains[id]);
+        delete pendingGains[id];
+      }
+    });
   }
 
   function updatePanner(id) {
@@ -153,14 +188,29 @@ const sounds = {
   document.addEventListener('circularSliderChange', (e) => {
     enableAudio();
     const { id, value } = e.detail;
-    if (gains[id]) {
-      if (value <= 0.01) {
+    
+    if (value <= 0.01) {
+      if (gains[id]) {
         gains[id].gain.value = 0;
-      } else {
-        gains[id].gain.value = value;
+      }
+      if (sources[id]) {
+        try {
+          sources[id].stop();
+          delete sources[id];
+          delete panners[id];
+          delete gains[id];
+        } catch (err) {
+          console.warn('Failed to stop source for', id, err);
+        }
       }
     } else {
-      pendingGains[id] = value;
+      if (gains[id]) {
+        gains[id].gain.value = value;
+      } else if (audioBuffers[id]) {
+        startSound(id, value);
+      } else {
+        pendingGains[id] = value;
+      }
     }
   });
 
@@ -168,31 +218,34 @@ const sounds = {
     Object.keys(sounds).forEach(id => updatePanner(id));
   }
 
-  // Test tone function for iOS debugging
-  function playTestTone() {
-    if (!audioContext || audioContext.state !== 'running') {
-      console.log('Cannot play test tone - AudioContext not ready');
-      return;
-    }
+
+  function primeAudio() {
+    if (!audioContext || audioContext.state !== 'running') return;
     
     try {
       const oscillator = audioContext.createOscillator();
       const gainNode = audioContext.createGain();
       
-      oscillator.frequency.setValueAtTime(440, audioContext.currentTime); // A4 note
+      oscillator.type = 'sine';
+      oscillator.frequency.setValueAtTime(1, audioContext.currentTime);
       oscillator.connect(gainNode);
       gainNode.connect(audioContext.destination);
       
-      gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-      gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+      gainNode.gain.setValueAtTime(0, audioContext.currentTime);
       
       oscillator.start(audioContext.currentTime);
-      oscillator.stop(audioContext.currentTime + 0.5);
+      oscillator.stop(audioContext.currentTime + 0.1);
       
     } catch (err) {
-      console.error('Failed to play test tone:', err);
+      console.error('Failed to prime audio:', err);
     }
   }
 
-  return { enableAudio, updatePanner, playTestTone };
+  function initializeAudioForIOS() {
+    if (isIOS && audioContext && audioContext.state === 'suspended') {
+      primeAudio();
+    }
+  }
+
+  return { enableAudio, updatePanner, primeAudio, initializeAudioForIOS };
 }

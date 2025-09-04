@@ -2,8 +2,10 @@ import { getPhobiaByName } from './phobias.js';
 
 export class Ghost {
     constructor(name, phobiaName, element) {
+        console.log('Ghost constructor called with:', { name, phobiaName, element });
         this.name = name;
         this.phobia = getPhobiaByName(phobiaName);
+        console.log('Found phobia:', this.phobia);
         this.element = element;
         this.fearScore = 0;
         this.wasSpooked = false;
@@ -11,6 +13,8 @@ export class Ghost {
         if (!this.phobia) {
             console.error(`Phobia "${phobiaName}" not found for ghost ${name}`);
         }
+        
+        console.log('Ghost created with name:', this.name);
     }
 
     calculateFearScore() {
